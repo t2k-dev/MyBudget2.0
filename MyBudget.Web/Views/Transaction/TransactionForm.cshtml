@@ -1,0 +1,137 @@
+﻿@model MyBudget.Web.Models.Transaction.TransactionFormViewModel
+@{
+    ViewBag.Title = "Платеж";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-4 offset-md-4 frm1">
+
+        @if (Model.Transaction.ID.ToString() != "")
+        {
+            <h3 class="form-title">Редактировать</h3>
+        }
+        else if (Model.Transaction.IsSpending == true)
+        {
+            <h3 class="form-title">Добавить расход</h3>
+        }
+        else if (Model.Transaction.IsSpending == false)
+        {
+            <h3 class="form-title">Добавить доход</h3>
+        }
+
+
+        @using (Html.BeginForm("Save", "Transaction"))
+        {
+
+            <form-group>
+                <div class="form-group">
+                    <label for="Transaction_Amount">Сумма <span class="txt-orange">*</span></label>
+                    <div>
+                        @Html.TextBoxFor(m => m.Transaction.Amount, new { @class = "form-control-lg amt-inp jq-money", autocomplete = "off", maxlength = "13", type = "tel", autofocus = "true" })
+                        <span class="cur-inp">T</span>
+                        @Html.ValidationMessageFor(m => m.Transaction.Amount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="Transaction_CategoryId">Категория</label>
+                    @Html.DropDownListFor(m => m.Transaction.CategoryID, new SelectList(Model.Categories, "ID", "Name"), new { @class = "form-control inp-short" })
+                    <a href="@Url.Action("UserCategories", "Category" )" class="glyphicon glyphicon-cog glyph-btn glyph-btn-lg"></a>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="Transaction_Name">Описание</label>
+                    @Html.TextBoxFor(m => m.Transaction.Name, new { @class = "form-control", autocomplete = "off", spellcheck = "false" })
+                </div>
+
+                <div class="form-group">
+                    <label for="TransDate" style="display:none">Дата</label>
+                    <div>
+                        @if (Model.Transaction == null)
+                        {
+                            <input type="text" id="sandbox-container" class="form-control lil-dp" name="Transaction.TransDate" value="@DateTime.Now.ToString("dd.MM.yyyy")" readonly="yes">
+                        }
+                        else
+                        {
+                            <input type="text" id="sandbox-container" class="form-control lil-dp" name="Transaction.TransDate" value="@Model.Transaction.TransactionDate.ToString("dd.MM.yyyy")" readonly="yes">
+                        }
+                    </div>
+                </div>
+                <hr />
+
+                <div class="form-group" style="display:none">
+                    <label for="Transaction.IsCompleted">Совершена</label>
+                    @Html.CheckBoxFor(m => m.Transaction.IsPlaned, new { @class = "form-control", autocomplete = "off" })
+                </div>
+
+                <div class="form-group" style="display:none">
+                    <label for="Description">Подробнее</label>
+                    @Html.TextAreaFor(m => m.Transaction.Description, new { @class = "form-control" })
+                </div>
+                @Html.HiddenFor(m => m.Transaction.IsSpending)
+                @Html.HiddenFor(m => m.Transaction.ID)
+                @Html.HiddenFor(m => m.Transaction.UserID)
+                <div class="col-md-10 offset-md-1  btn-cntnr">
+                    <button type="submit" class="btn btn-success form-btn">Сохранить</button>
+                </div>
+
+            </form-group>
+        }
+
+    </div>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            /*Для поля Сумма*/
+            var $amt = $('.jq-money');
+
+            if ($amt.val() == '0') {
+                $amt.val('');
+            }
+
+            if ($amt.val() !== '') {
+                var num = parseInt($amt.val(), 10);
+                $amt.val(num.toLocaleString("ru-RU"));
+            }
+
+            $amt.on("keyup", function (event) {
+                var selection = window.getSelection().toString();
+                if (selection !== '') { return; }
+
+                if ($.inArray(event.keyCode, [38, 40, 37, 39]) !== -1) { return; }
+
+                var $this = $(this);
+                var input = $this.val();
+
+                input = input.replace(/[\D\s\._\-]+/g, "");
+                input = input ? parseInt(input, 10) : 0;
+                $this.val(function () {
+                    return (input === 0) ? "" : input.toLocaleString("ru-RU");
+                });
+            });
+
+            $('form').submit(function () {
+                var textValue = $amt.val();
+                $amt.val(textValue.replace(/[\D\s\._\-]+/g, ""));
+            });
+            /*---*/
+        });
+
+
+        jQuery('#sandbox-container').datepicker({
+            format: "dd.mm.yyyy",
+            minViewMode: 0,
+            todayBtn: "linked",
+            language: "ru",
+            autoclose: true,
+            defaultViewDate: { year: 2018, month: 01, day: 01 }
+        });
+    </script>
+
+}

@@ -6,28 +6,32 @@
     <title>@ViewData["Title"] - MyBudget.Web</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome.css" />
+
+    <script src="https://kit.fontawesome.com/50679705e6.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MyBudget.Web</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+    <header style="background-color:#395971 !important">
+        <div class="container">
+            <div class="row">               
+                <div class="col-md-10 offset-md-1" style="padding:0;">
+                    <div class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+                        @Html.ActionLink(" ", "MainPage", "Transaction", null, new { @class = "h-logo" })
+                        <button class="navbar-toggler hamburger" id="hamburger-10" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="line"></span>
+                            <span class="line"></span>
+                            <span class="line"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarColor01">
+                            <ul class="navbar-nav mr-auto"></ul>
+                            <partial name="_LoginPartial" />
+                        </div>
+                    </div>
                 </div>
+
             </div>
-        </nav>
+        </div>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -35,14 +39,29 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer">
         <div class="container">
-            &copy; 2020 - MyBudget.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row" style="padding-top:15px;">
+                <div class="col-md-4 offset-md-4 text-center">
+
+                    <h6>&copy;2019 – MyBudget</h6>
+                    <h6 style="font-size: 0.8rem;"><span class="glyphicon glyphicon-envelope" style="margin-right:0.2rem;color:#888;"></span> <a href="mailto:MyBudgetTeam@yandex.kz">mybudgetteam@yandex.kz</a></h6>
+                </div>
+                <div class="col-md-4">
+                </div>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".hamburger").click(function () {
+                $(this).toggleClass("is-active");
+            });
+        });
+    </script>
 </body>
 </html>

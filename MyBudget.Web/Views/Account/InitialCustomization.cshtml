@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewData["Title"] = "InitialCustomization";
+}
+
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h3 class="text-center">Добро пожаловать!</h3>
+        <h6 class="text-center" style="margin-bottom: 1rem">Для комфортного использования предлагаем сделать первоначальные настройки</h6>
+
+        @using (Html.BeginForm("SaveInitialCustomization", "Account"))
+        {
+            <div class="conf-panel">
+                <div class="form-group">
+                    <span>Валюта по умолчанию </span>
+                    <select name="DefaultCurrency" class="form-control" style="width:4.2rem;display: inline-block;float: right;">
+                        <option>₸</option>
+                        <option>$</option>
+                        <option>€</option>
+                        <option>₽</option>
+                        <option>£</option>
+
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div style="width: 70%;display: inline-block;line-height: 1.4rem;">
+                        <span>Переносить остаток </span>
+                        <span style="margin-left: 0.5rem" class="details-btn" data-toggle="modal" data-target="#RestModal">?</span>
+                    </div>
+                    <select name="CarryoverRests" class="form-control" style="width:4.2rem;display: inline-block;float: right;">
+                        <option value="false">Нет</option>
+                        <option value="true">Да</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-10 offset-md-1  btn-cntnr" style="margin-top: 2rem;margin-bottom: 1rem;">
+                <button type="submit" class="btn btn-primary form-btn">Продолжить</button>
+            </div>
+        }
+        <h6 class="text-center" style="margin-bottom: 2rem;">* вы можете изменить эти настройки в любой момент в личном кабинете</h6>
+
+    </div>
+</div>
+<!-- ************** -->
+<!-- Модальные окна -->
+<!-- ************** -->
+<!-- Переносить остаток Инфо -->
+<div class="modal fade" id="RestModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="close close-mdl" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="glyphicon glyphicon-remove"></span></div>
+            </div>
+            <div class="modal-body">
+                <label>Если у Вас остались средства на балансе за прошлый месяц, они появятся как доход в новом месяце.</label>
+            </div>
+
+        </div>
+    </div>
+</div>
+

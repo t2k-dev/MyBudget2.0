@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="30px" height="24px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+									viewBox="0 0 102 66"
+									 xmlns:xlink="http://www.w3.org/1999/xlink">
+									 <defs>
+									  <style type="text/css">
+									   <![CDATA[
+									    .fil0 {fill:white}
+									   ]]>
+									  </style>
+									 </defs>
+									 <g id="Слой_x0020_1">
+									  <metadata id="CorelCorpID_0Corel-Layer"/>
+									  <g id="_416856360">
+									   <path class="fil0" d="M86 60l11 -10 0 -16 -11 -10 -50 0 -10 11 0 15 0 0 10 10 50 0zm16 -42l-82 0 0 48 82 0 0 -48z"/>
+									   <ellipse class="fil0" cx="61" cy="42" rx="15" ry="13"/>
+									   <ellipse class="fil0" cx="37" cy="42" rx="5" ry="4"/>
+									   <ellipse class="fil0" cx="86" cy="42" rx="5" ry="4"/>
+									  </g>
+									  <g id="_416857584">
+									   <polygon class="fil0" points="75,15 66,6 16,6 5,17 5,32 6,32 15,41 15,48 0,48 0,0 82,0 82,15 "/>
+									   <path class="fil0" d="M41 11c4,0 8,2 10,4l-20 0c2,-2 6,-4 10,-4z"/>
+									   <path class="fil0" d="M15 28c-2,-1 -3,-3 -3,-4 0,-2 1,-4 3,-4l0 8z"/>
+									  </g>
+									 </g>
+									</svg>

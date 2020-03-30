@@ -3,11 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29609.76
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBudget.Web", "MyBudget.Web\MyBudget.Web.csproj", "{67B91E78-4494-4A37-A9D3-6E8C4033D9D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBudget.Web", "MyBudget.Web\MyBudget.Web.csproj", "{67B91E78-4494-4A37-A9D3-6E8C4033D9D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBudget.Domain", "MyBudget.Domain\MyBudget.Domain.csproj", "{EA53959A-F273-453A-A8B2-1CD656B9E263}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBudget.Domain", "MyBudget.Domain\MyBudget.Domain.csproj", "{EA53959A-F273-453A-A8B2-1CD656B9E263}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBudget.Data", "MyBudget.Data\MyBudget.Data.csproj", "{66B41830-0942-4015-8FCD-27CAAA2D3050}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBudget.Data", "MyBudget.Data\MyBudget.Data.csproj", "{66B41830-0942-4015-8FCD-27CAAA2D3050}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBudget.Core", "MyBudget.Core\MyBudget.Core.csproj", "{D0614B00-E629-4880-96A6-8680BAEE18B0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{66B41830-0942-4015-8FCD-27CAAA2D3050} = {66B41830-0942-4015-8FCD-27CAAA2D3050}
+		{EA53959A-F273-453A-A8B2-1CD656B9E263} = {EA53959A-F273-453A-A8B2-1CD656B9E263}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +33,10 @@ Global
 		{66B41830-0942-4015-8FCD-27CAAA2D3050}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66B41830-0942-4015-8FCD-27CAAA2D3050}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66B41830-0942-4015-8FCD-27CAAA2D3050}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0614B00-E629-4880-96A6-8680BAEE18B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0614B00-E629-4880-96A6-8680BAEE18B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0614B00-E629-4880-96A6-8680BAEE18B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0614B00-E629-4880-96A6-8680BAEE18B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

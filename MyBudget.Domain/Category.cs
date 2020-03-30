@@ -28,14 +28,14 @@ namespace MyBudget.Domain
         #region System Categories
 
         /// <summary>
-        /// "Без Категории" for income transactions Id = 1
+        /// "Без Категории" for income transactions ID = 1
         /// </summary>
-        public static readonly int IncomeCategoryDefault = 1;
+        public static readonly int IncomeNoCategory = 1;
 
         /// <summary>
-        /// "Без Категории" for spending transactions Id = 2
+        /// "Без Категории" for spending transactions ID = 2
         /// </summary>
-        public static readonly int SpendingCategoryDefault = 2;
+        public static readonly int SpendingNoCategory = 2;
 
         /// <summary>
         /// Take money from somebody

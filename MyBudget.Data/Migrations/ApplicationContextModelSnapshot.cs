@@ -244,6 +244,162 @@ namespace MyBudget.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            IsSpendingCategory = false,
+                            IsSystem = true,
+                            Name = "Без категории"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            IsSpendingCategory = true,
+                            IsSystem = true,
+                            Name = "Без категории"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            IsSpendingCategory = false,
+                            IsSystem = true,
+                            Name = "Взять в долг"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            IsSpendingCategory = true,
+                            IsSystem = true,
+                            Name = "Дать в долг"
+                        },
+                        new
+                        {
+                            ID = 5,
+                            IsSpendingCategory = false,
+                            IsSystem = true,
+                            Name = "Остаток"
+                        },
+                        new
+                        {
+                            ID = 6,
+                            IsSpendingCategory = true,
+                            IsSystem = true,
+                            Name = "Отдать долг"
+                        },
+                        new
+                        {
+                            ID = 7,
+                            IsSpendingCategory = false,
+                            IsSystem = true,
+                            Name = "Получить долг"
+                        },
+                        new
+                        {
+                            ID = 8,
+                            IsSpendingCategory = true,
+                            IsSystem = true,
+                            Name = "Пополнить цель"
+                        },
+                        new
+                        {
+                            ID = 20,
+                            IsSpendingCategory = false,
+                            IsSystem = false,
+                            Name = "Зарплата"
+                        },
+                        new
+                        {
+                            ID = 21,
+                            IsSpendingCategory = false,
+                            IsSystem = false,
+                            Name = "Бизнес"
+                        },
+                        new
+                        {
+                            ID = 22,
+                            IsSpendingCategory = false,
+                            IsSystem = false,
+                            Name = "Премия"
+                        },
+                        new
+                        {
+                            ID = 23,
+                            IsSpendingCategory = true,
+                            IsSystem = false,
+                            Name = "Здоровье"
+                        },
+                        new
+                        {
+                            ID = 24,
+                            IsSpendingCategory = true,
+                            IsSystem = false,
+                            Name = "Жилье"
+                        },
+                        new
+                        {
+                            ID = 25,
+                            IsSpendingCategory = true,
+                            IsSystem = false,
+                            Name = "Авто"
+                        },
+                        new
+                        {
+                            ID = 26,
+                            IsSpendingCategory = true,
+                            IsSystem = false,
+                            Name = "Транспорт"
+                        },
+                        new
+                        {
+                            ID = 27,
+                            IsSpendingCategory = true,
+                            IsSystem = false,
+                            Name = "Спорт"
+                        },
+                        new
+                        {
+                            ID = 28,
+                            IsSpendingCategory = true,
+                            IsSystem = false,
+                            Name = "Еда и продукты"
+                        },
+                        new
+                        {
+                            ID = 29,
+                            IsSpendingCategory = true,
+                            IsSystem = false,
+                            Name = "Клубы и бары"
+                        },
+                        new
+                        {
+                            ID = 30,
+                            IsSpendingCategory = true,
+                            IsSystem = false,
+                            Name = "Развлечения"
+                        },
+                        new
+                        {
+                            ID = 31,
+                            IsSpendingCategory = true,
+                            IsSystem = false,
+                            Name = "Одежда"
+                        },
+                        new
+                        {
+                            ID = 32,
+                            IsSpendingCategory = true,
+                            IsSystem = false,
+                            Name = "Связь"
+                        },
+                        new
+                        {
+                            ID = 40,
+                            IsSpendingCategory = true,
+                            IsSystem = false,
+                            Name = "Подарки"
+                        });
                 });
 
             modelBuilder.Entity("MyBudget.Domain.Goal", b =>
