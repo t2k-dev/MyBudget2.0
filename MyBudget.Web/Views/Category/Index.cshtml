@@ -26,7 +26,9 @@
                         {
                             <tr>
                                 <td>@cat.Name</td>
-                                <td><span>@Html.ActionLink(" ", "DeleteFromMyCategories", "Category", new { id = cat.ID }, new { @class = "glyphicon glyphicon-trash glyph-btn" })</span></td>
+                                <td>
+                                    <button data-id="@cat.ID" type="button" class="btn btn-link fas fa-trash-alt glyph-btn js-del-rec" data-toggle="modal" data-target="#DelRecordModal"></button>
+                                </td>
                             </tr>
                         }
                     }
@@ -41,7 +43,7 @@
         </table>
         <hr />
         <div class="cat-add-btn-wr">
-            <a class="btn btn-primary new-trans" href="@Url.Action("AddSpendingCategory", "Category")"><span class="fas fa-plus"></span></a>
+            <a class="btn btn-primary new-trans" href="@Url.Action("Add", "Category", new { isSpending = true})"><span class="fas fa-plus"></span></a>
         </div>
     </div>
     <div class="col-md-5">
@@ -62,9 +64,9 @@
                         foreach (var cat in incomeCategories)
                         {
                             <tr>
-                                <td>@cat.Name</td>
+                                <td onclick = 'window.location = "".concat("/Category/Edit/", @cat.ID);'>@cat.Name</td>
                                 <td>
-                                    <button data-id="@cat.ID" type="button" class="btn btn-link glyphicon glyphicon-trash glyph-btn js-del-rec" data-toggle="modal" data-target="#DelRecordModal"></button>
+                                    <button data-id="@cat.ID" type="button" class="btn btn-link fas fa-trash-alt glyph-btn js-del-rec" data-toggle="modal" data-target="#DelRecordModal"></button>
                                 </td>
                             </tr>
                         }
@@ -83,7 +85,7 @@
         </table>
         <hr />
         <div class="cat-add-btn-wr">
-            <a class="btn btn-primary new-trans" href="@Url.Action("AddIncomeCategory", "Category")"><span class="fas fa-plus"></span></a>
+            <a class="btn btn-primary new-trans" href="@Url.Action("Add", "Category", new { isSpending = false})"><span class="fas fa-plus"></span></a>
         </div>
 
     </div>

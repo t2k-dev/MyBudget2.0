@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace MyBudget.Web.Models.Category
 {
-    public class UserCategoriesViewModel
+    public class CategoryFormViewModel
     {
-        public List<CategoryModel> Categories { get; set; }
+        public CategoryModel Category { get; set; }
     }
 }

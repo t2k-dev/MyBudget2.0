@@ -1,0 +1,27 @@
+﻿@model MyBudget.Web.Models.Category.CategoryFormViewModel
+
+@{
+    ViewBag.Title = "CategoryForm";
+}
+
+<div class="col-md-4 offset-md-4">
+    <h2 class="form-title">Новая категория</h2>
+
+    @using (Html.BeginForm("Save", "Category"))
+    {
+        <div class="form-group">
+            <label for="Name">Название</label>
+            @Html.TextBoxFor(m => m.Category.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Category.Name, "", new { @class = "text-danger" })
+        </div>
+        @Html.HiddenFor(m => m.Category.IsSpendingCategory)
+        @Html.HiddenFor(m => m.Category.ID)
+        @Html.HiddenFor(m => m.Category.CreatedByID)
+        <hr />
+        <div class="text-center btn-cntnr">
+            <button type="submit" class="btn btn-success">Сохранить</button>
+        </div>
+    }
+</div>
+
+

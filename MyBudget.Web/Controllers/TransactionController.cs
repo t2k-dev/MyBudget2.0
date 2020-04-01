@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyBudget.Core.Extensions;
 using MyBudget.Core.Interfaces;
+using MyBudget.Core.Models;
 using MyBudget.Domain;
 using MyBudget.Web.Models.Transaction;
 
@@ -61,7 +63,7 @@ namespace MyBudget.Web.Controllers
             var categories = _categoryService.GetOrderedUserCategories(userID, isSpending);
             var currency = _accountService.GetUserDefaultCurrency(userID);
             
-            var transaction = new Transaction()
+            var transaction = new TransactionModel()
             {
                 IsSpending = isSpending,
                 TransactionDate = DateTime.Now,
@@ -101,7 +103,7 @@ namespace MyBudget.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Save(Transaction transaction)
+        public IActionResult Save(TransactionModel transaction)
         {
             if (!ModelState.IsValid)
             {
@@ -128,6 +130,16 @@ namespace MyBudget.Web.Controllers
             }
 
             return RedirectToAction("MainPage", "Transaction");
+        }
+
+        [HttpPost]
+        public IActionResult Delete(string id)
+        {
+            id.CheckForNull(nameof(id));
+
+            _transactionService.DeleteTransaction(id);
+
+            return RedirectToAction("MainPage");
         }
     }
 }

@@ -26,7 +26,7 @@ namespace MyBudget.Core.Interfaces
         /// </summary>
         /// <param name="userID">User ID (Guid as string)</param>
         /// <returns>Currency</returns>
-        public Currency GetUserDefaultCurrency(string userID);
+        public CurrencyModel GetUserDefaultCurrency(string userID);
 
         /// <summary>
         /// Get users configuration.

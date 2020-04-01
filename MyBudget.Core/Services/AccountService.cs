@@ -9,6 +9,7 @@ using MyBudget.Core.Interfaces;
 using MyBudget.Core.Extensions;
 using MyBudget.Domain;
 using MyBudget.Core.Models.Account;
+using AutoMapper;
 
 namespace MyBudget.Core.Services
 {
@@ -17,10 +18,12 @@ namespace MyBudget.Core.Services
         #region ctors & fields
 
         private ApplicationContext _context;
+        private readonly IMapper _mapper;
 
-        public AccountService(ApplicationContext context)
+        public AccountService(ApplicationContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         #endregion
@@ -51,7 +54,7 @@ namespace MyBudget.Core.Services
             return symbol;
         }
 
-        public Currency GetUserDefaultCurrency(string userID)
+        public CurrencyModel GetUserDefaultCurrency(string userID)
         {
             userID.CheckForNull(nameof(userID));
 
@@ -60,7 +63,7 @@ namespace MyBudget.Core.Services
                 .Select(u => u.DefaultCurrency)
                 .FirstOrDefault();
 
-            return currency;
+            return _mapper.Map<Currency, CurrencyModel>(currency);
         }
 
         public UserConfigs GetUserConfigs(string userID)

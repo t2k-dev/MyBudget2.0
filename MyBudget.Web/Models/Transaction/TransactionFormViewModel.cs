@@ -1,4 +1,5 @@
-﻿using MyBudget.Domain;
+﻿using MyBudget.Core.Models;
+using MyBudget.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace MyBudget.Web.Models.Transaction
 {
     public class TransactionFormViewModel
     {
-        public IEnumerable<Domain.Category> Categories { get; set; }
-        public Domain.Transaction Transaction { get; set; }
+        public IEnumerable<CategoryModel> Categories { get; set; }
+        public TransactionModel Transaction { get; set; }
     }
 }

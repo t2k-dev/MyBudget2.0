@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyBudget.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -9,9 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MyBudget.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200401075424_CategoryIdentityStartValue50")]
+    partial class CategoryIdentityStartValue50
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -578,15 +580,20 @@ namespace MyBudget.Data.Migrations
 
             modelBuilder.Entity("MyBudget.Domain.UserCategory", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("CategoryID")
                         .HasColumnType("integer");
 
-                    b.HasKey("UserId", "CategoryID");
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("UserID", "CategoryID");
 
                     b.HasIndex("CategoryID");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserCategory");
                 });
@@ -718,9 +725,7 @@ namespace MyBudget.Data.Migrations
 
                     b.HasOne("MyBudget.Domain.User", "User")
                         .WithMany("UserCategories")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("MyBudget.Domain.User", b =>

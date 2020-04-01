@@ -1,19 +1,17 @@
-﻿using MyBudget.Domain;
-using System;
+﻿using MyBudget.Core.Models;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MyBudget.Core.Interfaces
 {
     public interface IGoalService
     {
-        public List<Goal> GetUserGoals(string userID);
+        public List<GoalModel> GetUserGoals(string userID);
 
-        public Goal GetGoal(int goalID);
+        public GoalModel GetGoal(int goalID);
 
-        public void AddGoal(Goal goal);
+        public void AddGoal(GoalModel goal);
 
-        public void UpdateGoal(Goal goal);
+        public void UpdateGoal(GoalModel goal);
 
         public void PutMoney(double amount, int goalID);
     }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyBudget.Core.Enums;
 using MyBudget.Core.Interfaces;
+using MyBudget.Core.Models;
 using MyBudget.Domain;
 using MyBudget.Web.Models;
 
@@ -40,7 +41,7 @@ namespace MyBudget.Web.Controllers
             var userID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var defaultCurrency = _accountService.GetUserDefaultCurrency(userID);
             
-            var goal = new Goal
+            var goal = new GoalModel
             {
                 Type = type,
                 UserID = userID,
@@ -70,7 +71,7 @@ namespace MyBudget.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Save(Goal goal)
+        public IActionResult Save(GoalModel goal)
         {
             var userID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 

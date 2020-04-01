@@ -1,9 +1,9 @@
-﻿using MyBudget.Domain;
+﻿using MyBudget.Core.Models;
 
 namespace MyBudget.Web.Models
 {
     public class GoalFormViewModel
     {
-        public Goal Goal { get; set; }
+        public GoalModel Goal { get; set; }
     }
 }

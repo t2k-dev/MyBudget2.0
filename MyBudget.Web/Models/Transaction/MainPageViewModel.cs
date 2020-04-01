@@ -1,4 +1,4 @@
-﻿using MyBudget.Domain;
+﻿using MyBudget.Core.Models;
 using System.Collections.Generic;
 
 namespace MyBudget.Web.Models.Transaction
@@ -13,7 +13,7 @@ namespace MyBudget.Web.Models.Transaction
         /// <summary>
         /// User goals, debts and loans.
         /// </summary>
-        public List<Goal> GoalsList { get; set; }
+        public List<GoalModel> GoalsList { get; set; }
 
         /// <summary>
         /// User property DefaultCurrency.

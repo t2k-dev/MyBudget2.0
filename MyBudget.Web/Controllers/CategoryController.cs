@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyBudget.Core.Interfaces;
+using MyBudget.Core.Models;
 using MyBudget.Web.Models.Category;
 
 namespace MyBudget.Web.Controllers
@@ -38,5 +37,76 @@ namespace MyBudget.Web.Controllers
 
             return View(viewmodel);
         }
+
+        public IActionResult Add(bool isSpending)
+        {
+            var userID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            
+            var category = new CategoryModel()
+            {
+                IsSpendingCategory = isSpending,
+                CreatedByID = userID
+            };
+
+            var viewmodel = new CategoryFormViewModel
+            {
+                Category = category
+            };
+
+            return View("CategoryForm", viewmodel);
+        }
+
+        [HttpPost]
+        public IActionResult Save(CategoryModel category)
+        {
+            if (!ModelState.IsValid)
+            {
+                var viewmodel = new CategoryFormViewModel
+                {
+                    Category = category
+                };
+
+                return View("CategoryForm", viewmodel);
+            }
+
+
+            if (category.ID == 0)
+            {
+                _categoryService.AddNewCategory(category);
+            }
+            else
+            {
+                /*Для редактирования*/
+            }
+            return RedirectToAction("Index", "Category");
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var userID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var category = _categoryService.GetCategory(id);
+
+            if (category.CreatedByID != userID)
+            {
+                throw new Exception("Owners only can edit categories.");
+            }
+
+            var viewmodel = new CategoryFormViewModel
+            {
+                Category = category
+            };
+
+            return View("CategoryForm", viewmodel);
+        }
+
+        public IActionResult DeleteFromMyCategories(int id)
+        {
+            var userID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            _categoryService.DeleteUserCategory(userID, id);
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

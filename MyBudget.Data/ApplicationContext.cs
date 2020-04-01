@@ -25,7 +25,7 @@ namespace MyBudget.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<UserCategory>()
-                .HasKey(u => new { u.UserID, u.CategoryID });
+                .HasKey(u => new { u.UserId, u.CategoryID });
 
             #region Seeding database.
 
@@ -57,6 +57,8 @@ namespace MyBudget.Data
                 new Category() { ID = 32, Name = "Связь", IsSpendingCategory = true, IsSystem = false },
                 new Category() { ID = 40, Name = "Подарки", IsSpendingCategory = true, IsSystem = false }
                 );
+            builder.Entity<Category>().Property(c => c.ID).HasIdentityOptions(startValue: 50);
+
 
             builder.Entity<Currency>().HasData(
                 new Currency() { ID = 1, Name = "Тенге", Symbol = "₸" },

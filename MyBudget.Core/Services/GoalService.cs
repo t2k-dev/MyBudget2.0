@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MyBudget.Core.Enums;
 using MyBudget.Core.Extensions;
 using MyBudget.Core.Interfaces;
+using MyBudget.Core.Models;
 using MyBudget.Data;
 using MyBudget.Domain;
 using System;
@@ -16,18 +18,21 @@ namespace MyBudget.Core.Services
         #region ctor & fields
         private readonly ApplicationContext _context;
         private readonly IAccountService _accountService;
+        private readonly IMapper _mapper;
 
         public GoalService(
             ApplicationContext context,
-            IAccountService accountService
+            IAccountService accountService,
+            IMapper mapper
             )
         {
             _context = context;
             _accountService = accountService;
+            _mapper = mapper;
         }
         #endregion
 
-        public List<Goal> GetUserGoals(string userID)
+        public List<GoalModel> GetUserGoals(string userID)
         {
             if (userID == null)
             {
@@ -39,22 +44,24 @@ namespace MyBudget.Core.Services
                 .ThenBy(g => g.GoalName)
                 .ToList();
 
-            return goals;
+            return _mapper.Map<List<Goal>, List<GoalModel>>(goals);
         }
 
-        public Goal GetGoal(int goalID)
+        public GoalModel GetGoal(int goalID)
         {
             var goal = _context.Goals
                 .Include(g => g.Currency)
                 .SingleOrDefault(g => g.ID == goalID);
 
-            return goal;
+            return _mapper.Map<Goal, GoalModel>(goal);
         }
 
-        public void AddGoal(Goal goal)
+        public void AddGoal(GoalModel goalModel)
         {
-            goal.CheckForNull(nameof(goal));
+            goalModel.CheckForNull(nameof(goalModel));
             
+            var goal = _mapper.Map<GoalModel, Goal>(goalModel);
+
             switch (goal.Type)
             {
                 case (byte)GoalTypes.Debt:
@@ -71,11 +78,14 @@ namespace MyBudget.Core.Services
 
             _context.Goals.Add(goal);
             _context.SaveChanges();
-
         }
 
-        public void UpdateGoal(Goal goal)
+        public void UpdateGoal(GoalModel goalModel)
         {
+            goalModel.CheckForNull(nameof(goalModel));
+
+            var goal = _mapper.Map<GoalModel, Goal>(goalModel);
+
             var goalInDb = _context.Goals.Single(g => g.ID == goal.ID);
             goalInDb.GoalName = goal.GoalName;
             goalInDb.TotalAmount = goal.TotalAmount;

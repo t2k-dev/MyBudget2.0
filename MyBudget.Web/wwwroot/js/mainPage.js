@@ -212,7 +212,7 @@ function loadTable() {
                     var $td_amt = $('<td class="text-right amt ' + spendingClass + '">').text(opChar + String.fromCharCode(160) + item.amount.toLocaleString("ru-RU") + ' ' + defCur).on("click", function () {
                         window.location.href = "/Transaction/Edit/" + item.id;
                     });
-                    var $tr = $('<tr data-amt="' + item.Amount + '" data-IsPlaned="' + item.IsPlaned + '" data-tr-id="' + item.Id + '" data-IsSpending="' + item.IsSpending + '">').append(
+                    var $tr = $('<tr data-amt="' + item.Amount + '" data-IsPlaned="' + item.IsPlaned + '" data-tr-id="' + item.id + '" data-IsSpending="' + item.IsSpending + '">').append(
                         /*Кнопка "запланировано"*/
                         $('<td class="text-center js-switch ' + op_class + '">').append($('<span class="glyphicon glyphicon-ok glyph-btn occured"></span>')),
                         /*Наименование*/
@@ -226,7 +226,7 @@ function loadTable() {
                         /*Сумма*/
                         $td_amt,
                         /*Кнопка "Удалить"*/
-                        $('<td class="text-center">').append($('<button type="button" class="btn btn-link glyphicon glyphicon-trash glyph-btn js-del-tr" data-toggle="modal" data-target="#DelTransactionModal">'))
+                        $('<td class="text-center">').append($('<button type="button" class="btn btn-link fas fa-trash-alt glyph-btn js-del-tr" data-toggle="modal" data-target="#DelTransactionModal">'))
                     );
 
                     $tr.appendTo('#transactions_table');
