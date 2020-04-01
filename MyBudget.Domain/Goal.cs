@@ -26,23 +26,8 @@ namespace MyBudget.Domain
 
         public string Description { get; set; }
 
-        #region Type constants
+        public Currency Currency { get; set; }
 
-        /// <summary>
-        /// Goal
-        /// </summary>
-        public static readonly byte TypeGoal = 1;
-
-        /// <summary>
-        /// Take money from somebody
-        /// </summary>
-        public static readonly byte TypeDebt = 2;
-
-        /// <summary>
-        /// Give money to somebody
-        /// </summary>
-        public static readonly byte TypeCredit = 3;
-        
-        #endregion
+        public int CurrencyID { get; set; }
     }
 }

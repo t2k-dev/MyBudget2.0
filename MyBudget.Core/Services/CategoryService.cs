@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyBudget.Core.Extensions;
 using MyBudget.Core.Interfaces;
+using MyBudget.Core.Models;
 using MyBudget.Data;
 using MyBudget.Domain;
 using System;
@@ -129,6 +130,27 @@ namespace MyBudget.Core.Services
             categories.Insert(0, defaultCategory);
             
             return categories;
+        }
+
+        public List<CategoryModel> GetAllUserCategories(string userID)
+        {
+            userID.CheckForNull(nameof(userID));
+
+            var categories = _context.Categories
+                .Where(c => c.UserCategories
+                    .Any(uc => uc.UserID == Guid.Parse(userID)))
+                .ToList();
+            
+            var categoryModelList = new List<CategoryModel>();
+            foreach (var category in categories)
+            {
+                var categoryModel = new CategoryModel()
+                {
+                    ID =
+                };
+            }
+
+            return categoryModelList;
         }
     }
 }

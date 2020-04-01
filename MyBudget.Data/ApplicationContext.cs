@@ -13,6 +13,7 @@ namespace MyBudget.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Goal> Goals { get; set; }
         public DbSet<Template> Templates { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
 
         #endregion
 
@@ -56,7 +57,14 @@ namespace MyBudget.Data
                 new Category() { ID = 32, Name = "Связь", IsSpendingCategory = true, IsSystem = false },
                 new Category() { ID = 40, Name = "Подарки", IsSpendingCategory = true, IsSystem = false }
                 );
-            
+
+            builder.Entity<Currency>().HasData(
+                new Currency() { ID = 1, Name = "Тенге", Symbol = "₸" },
+                new Currency() { ID = 2, Name = "Доллар США", Symbol = "$" },
+                new Currency() { ID = 3, Name = "Евро", Symbol = "€" },
+                new Currency() { ID = 4, Name = "Российский рубль", Symbol = "₽" },
+                new Currency() { ID = 5, Name = "Фунт стерлингов", Symbol = "£" }
+                );
             #endregion
 
             base.OnModelCreating(builder);

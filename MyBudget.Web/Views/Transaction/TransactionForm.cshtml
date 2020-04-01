@@ -29,7 +29,7 @@
                     <label for="Transaction_Amount">Сумма <span class="txt-orange">*</span></label>
                     <div>
                         @Html.TextBoxFor(m => m.Transaction.Amount, new { @class = "form-control-lg amt-inp jq-money", autocomplete = "off", maxlength = "13", type = "tel", autofocus = "true" })
-                        <span class="cur-inp">T</span>
+                        <span class="cur-inp">@Model.Transaction.Currency.Symbol</span>
                         @Html.ValidationMessageFor(m => m.Transaction.Amount, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -74,6 +74,7 @@
                 @Html.HiddenFor(m => m.Transaction.IsSpending)
                 @Html.HiddenFor(m => m.Transaction.ID)
                 @Html.HiddenFor(m => m.Transaction.UserID)
+                @Html.HiddenFor(m => m.Transaction.CurrencyID)
                 <div class="col-md-10 offset-md-1  btn-cntnr">
                     <button type="submit" class="btn btn-success form-btn">Сохранить</button>
                 </div>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyBudget.Core.Interfaces;
 using MyBudget.Core.Models;
+using MyBudget.Core.Models.Account;
 using MyBudget.Core.Services;
 using MyBudget.Domain;
 using MyBudget.Web.Models.Account;
@@ -89,7 +90,7 @@ namespace MyBudget.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.UserName, Email = model.Email };
+                var user = new User { UserName = model.UserName, Email = model.Email, DefaultCurrencyID = 1 };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -128,7 +129,7 @@ namespace MyBudget.Web.Controllers
         }
         
         [HttpPost]
-        public async Task<ActionResult> SaveInitialCustomization(InitialCustomizationViewModel model)
+        public IActionResult SaveInitialCustomization(InitialCustomizationViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -146,7 +147,7 @@ namespace MyBudget.Web.Controllers
 
             _accountService.SaveInitialCustomization(initialCustomizationModel);
 
-            return RedirectToAction("MyBudget", "Transactions");
+            return RedirectToAction("MainPage", "Transaction");
         }
 
         #endregion
@@ -160,7 +161,43 @@ namespace MyBudget.Web.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
         }
-        
+
+        #endregion
+
+        #region Manage
+        public IActionResult Manage()
+        {
+            var userID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            
+            var userConfigs = _accountService.GetUserConfigs(userID);
+            
+            var viewModel = new MangeViewModel
+            {
+                DefaultCurrencyID = userConfigs.DefaultCurrencyID,
+                CarryoverRests = userConfigs.CarryoverRests,
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult SaveConfig(MangeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return null;
+            }
+            
+            var userConfigs = new UserConfigs
+            {
+                CarryoverRests = model.CarryoverRests,
+                DefaultCurrencyID = model.DefaultCurrencyID
+            };
+            var userID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            _accountService.SaveConfig(userConfigs, userID);
+         
+            return RedirectToAction("MainPage", "Transaction");
+        }
         #endregion
     }
 }

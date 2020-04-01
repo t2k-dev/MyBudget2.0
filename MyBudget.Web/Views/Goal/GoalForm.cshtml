@@ -1,0 +1,160 @@
+﻿@model MyBudget.Web.Models.GoalFormViewModel
+@{
+    ViewBag.Title = "Новая цель";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-4 offset-md-4 frm1">
+
+        @if (Model.Goal.ID != 0)
+        {
+            <h3 class="form-title">Редактировать</h3>
+        }
+        else if (Model.Goal.Type == 1)
+        {
+            <h3 class="form-title">Новая цель</h3>
+        }
+        else if (Model.Goal.Type == 2)
+        {
+            <h3 class="form-title">Взять в долг</h3>
+        }
+        else if (Model.Goal.Type == 3)
+        {
+            <h3 class="form-title">Дать в долг</h3>
+        }
+
+
+        @using (Html.BeginForm("Save", "Goal"))
+        {
+            <div class="form-group">
+                <label for="GoalName">Название</label>
+                @Html.TextBoxFor(m => m.Goal.GoalName, new { @class = "form-control", autocomplete = "off", spellcheck = "false" })
+                @Html.ValidationMessageFor(m => m.Goal.GoalName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="GoalName">Полная сумма</label>
+                @Html.TextBoxFor(m => m.Goal.TotalAmount, new { @class = "form-control-lg amt-inp jq-money", autocomplete = "off", maxlength = "13", type = "tel" })
+                <span class="cur-inp">@Model.Goal.Currency.Symbol</span>
+                @Html.ValidationMessageFor(m => m.Goal.TotalAmount, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="GoalName">Текущая сумма</label>
+                @Html.TextBoxFor(m => m.Goal.CurrentAmount, new { @class = "form-control-lg amt-inp jq-money", autocomplete = "off", maxlength = "13", type = "tel" })
+                <span class="cur-inp">@Model.Goal.Currency.Symbol</span>
+                @Html.ValidationMessageFor(m => m.Goal.CurrentAmount, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-check">
+
+                @{
+                    string displayVal;
+                    string ValCD = null;
+                    string checkedVal = null;
+
+                    if (@Model.Goal.CompleteDate == null)
+                    {
+                        displayVal = "none";
+                    }
+                    else
+                    {
+                        checkedVal = "checked";
+                        displayVal = "block";
+                        DateTime complDateValue = (DateTime)@Model.Goal.CompleteDate;
+                        ValCD = complDateValue.ToString("dd.MM.yyyy");
+                    }
+                }
+
+                <input type="checkbox" class="form-check-input" id="chDate" @checkedVal>
+                <label for="chDate" style="width:100%">Дата окончания</label>
+                <div id="goal-date-w" style="display:@displayVal">
+                    <input type="text" name="Goal.CompleteDate" id="sandbox-container" value="@ValCD" class="form-control lil-dp" spellcheck="false" autocomplete="off" readonly>
+                    <p class="hlp-text" style="margin-top: 0.5rem;">
+                        * за месяц до окончания этой даты на главном экране появится подсказка.
+                    </p>
+                </div>
+            </div>
+
+
+            @Html.HiddenFor(m => m.Goal.ID)
+            @Html.HiddenFor(m => m.Goal.UserID)
+            @Html.HiddenFor(m => m.Goal.Type)
+            @Html.HiddenFor(m => m.Goal.IsActive)
+            @Html.HiddenFor(m => m.Goal.CurrencyID)
+            <hr />
+            <div class="col-md-10 offset-md-1 btn-cntnr text-center ">
+                <button type="submit" class="btn btn-success form-btn">Сохранить</button>
+            </div>
+        }
+    </div>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            /*Для поля Сумма*/
+            $('.jq-money').each(function () {
+                var $amt = $(this);
+
+                if ($amt.val() == '0') {
+                    $amt.val('');
+                }
+
+                if ($amt.val() !== '') {
+                    var num = parseInt($amt.val(), 10);
+                    $amt.val(num.toLocaleString("ru-RU"));
+                }
+
+                $amt.on("keyup", function (event) {
+                    var selection = window.getSelection().toString();
+                    if (selection !== '') { return; }
+
+                    if ($.inArray(event.keyCode, [38, 40, 37, 39]) !== -1) { return; }
+
+                    var $this = $(this);
+                    var input = $this.val();
+
+                    input = input.replace(/[\D\s\._\-]+/g, "");
+                    input = input ? parseInt(input, 10) : 0;
+                    $this.val(function () {
+                        return (input === 0) ? "" : input.toLocaleString("ru-RU");
+                    });
+                });
+
+            });
+
+            $('form').submit(function () {
+                $('.jq-money').each(function () {
+
+                    var textValue = $(this).val();
+
+                    $(this).val(textValue.replace(/[\D\s\._\-]+/g, ""));
+                    if (textValue == '')
+                        $(this).val('0');
+                });
+
+                if ($("#sandbox-container").val() == 'дд.мм.гггг')
+                    $("#sandbox-container").val('');
+            });
+            /*---*/
+
+            /*Скрыть/показать дату*/
+            $('#chDate').on("click", function () {
+                var $dtInp = $('#goal-date-w');
+                $dtInp.toggle();
+                if ($dtInp.css('display') == 'block')
+                    $('#sandbox-container').val('дд.мм.гггг')
+                else
+                    $('#sandbox-container').val('')
+            });
+
+            jQuery('#sandbox-container').datepicker({
+                format: "dd.mm.yyyy",
+                minViewMode: 0,
+                todayBtn: "linked",
+                language: "ru",
+                autoclose: true,
+            });
+
+        });
+    </script>
+}

@@ -6,7 +6,8 @@ namespace MyBudget.Domain
 {
     public class User : IdentityUser
     {        
-        public string DefaultCurrency { get; set; }
+        public int DefaultCurrencyID { get; set; }
+        public Currency DefaultCurrency { get; set; }
         public bool CarryoverRests { get; set; }
         public bool UseTemplates { get; set; }
         public DateTime? UpdateDate { get; set; }

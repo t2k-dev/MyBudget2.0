@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyBudget.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -9,9 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MyBudget.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20200330142335_Currency_table_added")]
+    partial class Currency_table_added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -464,9 +466,6 @@ namespace MyBudget.Data.Migrations
                     b.Property<DateTime?>("CompleteDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("CurrencyID")
-                        .HasColumnType("integer");
-
                     b.Property<double>("CurrentAmount")
                         .HasColumnType("double precision");
 
@@ -489,8 +488,6 @@ namespace MyBudget.Data.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("CurrencyID");
 
                     b.HasIndex("UserID");
 
@@ -669,12 +666,6 @@ namespace MyBudget.Data.Migrations
 
             modelBuilder.Entity("MyBudget.Domain.Goal", b =>
                 {
-                    b.HasOne("MyBudget.Domain.Currency", "Currency")
-                        .WithMany()
-                        .HasForeignKey("CurrencyID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("MyBudget.Domain.User", "User")
                         .WithMany()
                         .HasForeignKey("UserID");

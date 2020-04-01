@@ -7,7 +7,9 @@ namespace MyBudget.Core.Interfaces
 {
     public interface ITransactionService
     {
-        public List<Transaction> GetUserTransaction(string userID, int year, int month);
+        public Transaction GetTransaction(string transactionID);
+
+        public List<Transaction> GetUserTransactions(string userID, int year, int month);
 
         public void AddTransaction(Transaction transaction);
 

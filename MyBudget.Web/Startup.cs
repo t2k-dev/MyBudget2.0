@@ -42,10 +42,12 @@ namespace MyBudget.Web
                 .AddEntityFrameworkStores<ApplicationContext>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddAutoMapper();
 
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ITransactionService, TransactionService>();
+            services.AddScoped<IGoalService, GoalService>();
 
             services.AddControllersWithViews();
         }

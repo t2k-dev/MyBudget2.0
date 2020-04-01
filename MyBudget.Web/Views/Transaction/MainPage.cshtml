@@ -1,5 +1,6 @@
 ﻿
 @model MyBudget.Web.Models.Transaction.MainPageViewModel
+@using MyBudget.Core.Enums;
 @{
     ViewData["Title"] = "Мои транзакции";
 }
@@ -73,9 +74,129 @@
             </table>
         </div>
 
+        @if (Model.GoalsList.Where(x => x.Type == (byte)GoalTypes.Goal).Count() != 0)
+        {
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">
+                    <h5>Цели</h5>
+                </div>
 
+                <div class="card-body">
+                    @foreach (var goal in Model.GoalsList.Where(x => x.Type == (byte)GoalTypes.Goal))
+                    {
+                        string opacityClass = goal.IsActive == false ? "goalIsFinished" : "";
 
-        @if (Model.MyGoals.Count > 0)
+                        <div class="crd-itm @opacityClass">
+                            <div class="crd-content">
+                                <button data-goal-id="@goal.ID" type="button" class="btn btn-link glyphicon glyphicon-trash del-btn-crd js-del-goal" data-toggle="modal" data-target="#DelTemplateModal"></button>
+
+                                <a class="crd-caption" href="@Url.Action("Edit", "Goal", new { id = goal.ID})">@goal.GoalName </a>
+                                @if (goal.IsActive == true)
+                                {
+                                    <button type="button" class="btn btn-link js-pay-goal pay-goal" data-toggle="modal" data-target="#myModal" data-goal-id="@goal.ID" data-goal-Amount="@goal.TotalAmount" data-goal-CurrentAmount="@goal.CurrentAmount" data-catType="SYS_5"></button>
+                                }
+                                <div class="crd-bot">
+                                    @{
+                                        string cA;
+                                        if (@goal.CurrentAmount > 0) { cA = @goal.CurrentAmount.ToString("### ### ### ###"); } else { cA = "0"; }
+                                    }
+                                    <span>@cA @Model.DefaultCurrency из @goal.TotalAmount.ToString("### ### ### ###") @Model.DefaultCurrency</span>
+                                </div>
+                            </div>
+                            @{
+                                string progress = (@goal.CurrentAmount * 100 / @goal.TotalAmount).ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+                            }
+                            <div class="progress progress-goal">
+                                <div class="progress-bar progress-bar-goal" style="width:@progress%;"></div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        @if (Model.GoalsList.Where(x => x.Type == (byte)GoalTypes.Debt).Count() != 0)
+        {
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header">
+                    <h5>Я должен</h5>
+                </div>
+
+                <div class="card-body">
+                    @foreach (var debt in Model.GoalsList.Where(x => x.Type == (byte)GoalTypes.Debt))
+                    {
+                        string opacityClass = debt.IsActive == false ? "goalIsFinished" : "";
+                        <div class="crd-itm @opacityClass">
+                            <div class="crd-content">
+                                <button data-goal-id="@debt.ID" type="button" class="btn btn-link glyphicon glyphicon-trash del-btn-crd js-del-goal" data-toggle="modal" data-target="#DelTemplateModal"></button>
+
+                                <a class="crd-caption" href="@Url.Action("Edit", "Goal", new { id = debt.ID})">@debt.GoalName </a>
+                                @if (debt.IsActive == true)
+                                {
+                                    <button type="button" class="btn btn-link js-pay-goal pay-goal" data-toggle="modal" data-target="#myModal" data-goal-id="@debt.ID" data-goal-Amount="@debt.TotalAmount" data-goal-CurrentAmount="@debt.CurrentAmount" data-catType="SYS_3"></button>
+                                }
+
+                                <div class="crd-bot">
+                                    @{
+                                        string cA;
+                                        if (@debt.CurrentAmount > 0) { cA = @debt.CurrentAmount.ToString("### ### ### ###"); } else { cA = "0"; }
+                                    }
+                                    <span>@cA @Model.DefaultCurrency из @debt.TotalAmount.ToString("### ### ### ###") @Model.DefaultCurrency</span>
+                                </div>
+                            </div>
+                            @{
+                                string progress = (@debt.CurrentAmount * 100 / @debt.TotalAmount).ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+                            }
+                            <div class="progress progress-debt">
+                                <div class="progress-bar progress-bar-debt" style="width:@progress%;"></div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        }
+
+        @if (Model.GoalsList.Where(x => x.Type == (byte)GoalTypes.Loan).Count() != 0)
+        {
+            <div class="card text-white bg-credit mb-3">
+                <div class="card-header">
+                    <h5>Мне должны</h5>
+                </div>
+
+                <div class="card-body">
+                    @foreach (var loan in Model.GoalsList.Where(x => x.Type == (byte)GoalTypes.Loan))
+                    {
+                        string opacityClass = loan.IsActive == false ? "goalIsFinished" : "";
+                        <div class="crd-itm @opacityClass">
+                            <div class="crd-content">
+                                <button data-goal-id="@loan.ID" type="button" class="btn btn-link glyphicon glyphicon-trash del-btn-crd js-del-goal" data-toggle="modal" data-target="#DelTemplateModal"></button>
+                                <a class="crd-caption" href="@Url.Action("Edit", "Goal", new { id = loan.ID})">@loan.GoalName </a>
+                                @if (loan.IsActive == true)
+                                {
+                                    <button type="button" class="btn btn-link js-pay-goal pay-goal" data-toggle="modal" data-target="#myModal" data-goal-id="@loan.ID" data-goal-Amount="@loan.TotalAmount" data-goal-CurrentAmount="@loan.CurrentAmount" data-catType="SYS_1"></button>
+                                }
+                                <div class="crd-bot">
+                                    @{
+                                        string cA;
+                                        if (@loan.CurrentAmount > 0) { cA = @loan.CurrentAmount.ToString("### ### ### ###"); } else { cA = "0"; }
+                                    }
+                                    <span>@cA @Model.DefaultCurrency из @loan.TotalAmount.ToString("### ### ### ###") @Model.DefaultCurrency</span>
+                                </div>
+                            </div>
+                            @{
+                                string progress = (@loan.CurrentAmount * 100 / @loan.TotalAmount).ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+                            }
+                            <div class="progress progress-credit">
+                                <div class="progress-bar progress-bar-credit" style="width:@progress%;"></div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        @if (Model.GoalsList.Count > 0)
         {
             <div class="text-center">
                 <span class="details-btn" data-toggle="modal" data-target="#goalsInfo">?</span>

@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @using MyBudget.Domain;
+@using MyBudget.Core.Enums;
 @inject SignInManager<User> _signInManager
 
 @if (_signInManager.IsSignedIn(User))
@@ -13,18 +14,18 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="themes"><span class="glyphicon glyphicon-flag" style="margin-right:3px;"></span> Цели, долги <span class="caret"></span></a>
                 <div class="dropdown-menu" aria-labelledby="themes">
-                    <a class="dropdown-item" href="@Url.Action("AddGoal", "Goals" )">Добавить цель</a>
-                    <a class="dropdown-item" href="@Url.Action("AddDebt", "Goals" )">Взять в долг</a>
-                    <a class="dropdown-item" href="@Url.Action("AddCredit", "Goals" )">Дать в долг</a>
+                    <a class="dropdown-item" href="@Url.Action("Add", "Goal", new { type = (byte)GoalTypes.Goal} )">Добавить цель</a>
+                    <a class="dropdown-item" href="@Url.Action("Add", "Goal", new { type = (byte)GoalTypes.Debt} )">Взять в долг</a>
+                    <a class="dropdown-item" href="@Url.Action("Add", "Goal", new { type = (byte)GoalTypes.Loan} )">Дать в долг</a>
                 </div>
             </li>
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="themes"><span class="glyphicon glyphicon-user" style="margin-right:3px;"></span> @User.Identity.Name <span class="caret"></span></a>
                 <div class="dropdown-menu" aria-labelledby="themes">
-                    <a class="dropdown-item" href="@Url.Action("Index", "Manage")">Мой кабинет</a>
+                    <a class="dropdown-item" href="@Url.Action("Manage", "Account")">Мой кабинет</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="@Url.Action("UserCategories", "Category")">Категории</a>
+                    <a class="dropdown-item" href="@Url.Action("Index", "Category")">Категории</a>
                     <a class="dropdown-item" href="@Url.Action("TemplateList", "Template")">Шаблоны платежей</a>
 
                 </div>

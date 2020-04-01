@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using MyBudget.Core.Interfaces;
+using System;
 
 namespace MyBudget.Core.Services
 {
@@ -18,8 +19,17 @@ namespace MyBudget.Core.Services
             _context = context;
         }
         #endregion
+        
+        public Transaction GetTransaction(string transactionID)
+        {
+            var transaction = _context.Transactions
+                .Include(t => t.Currency)
+                .SingleOrDefault(t => t.ID == Guid.Parse(transactionID));
 
-        public List<Transaction> GetUserTransaction(string userID, int year, int month)
+            return transaction;
+        }
+
+        public List<Transaction> GetUserTransactions(string userID, int year, int month)
         {
             if (userID == null)
             {
@@ -28,8 +38,9 @@ namespace MyBudget.Core.Services
 
             var transactions = _context.Transactions
                 .Where(transaction => transaction.UserID == userID
-                    && transaction.TransactionDate.Year == year
-                    && transaction.TransactionDate.Month == month)
+                    //&& transaction.TransactionDate.Year == year
+                    //&& transaction.TransactionDate.Month == month
+                    )
                 .Include(transaction => transaction.Category)
                 .ToList();
 

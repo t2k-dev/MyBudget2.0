@@ -1,0 +1,90 @@
+﻿@model MyBudget.Web.Models.Account.MangeViewModel
+@{
+    ViewBag.Title = "Мой кабинет";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h2>@ViewBag.Title</h2>
+        <p class="text-success">@ViewBag.StatusMessage</p>
+        <h6 class="pr-sec-ttl">Параметры учетной записи</h6>
+        <div class="conf-panel">
+            @Html.ActionLink("Изменить пароль", "ChangePassword")<br />
+        </div>
+        
+        <h6 class="pr-sec-ttl">Персональные настройки</h6>
+        @using (Html.BeginForm("SaveConfig", "Account"))
+        {
+            <div class="conf-panel">
+                <div class="form-group">
+                    <a href="@Url.Action("Index", "Category")">Мои категории</a>
+                </div>
+                <div class="form-group">
+                    <a href="@Url.Action("TemplateList", "Template")">Шаблоны платежей</a>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <span>Валюта по умолчанию </span>
+                    @Html.DropDownList("DefaultCurrencyID", new SelectList(
+                        new[]
+                        {
+                            new { Value = "", Text = "" },
+                            new { Value = "1", Text = "₸" },
+                            new { Value = "2", Text = "$" },
+                            new { Value = "3", Text = "€" },
+                            new { Value = "4", Text = "₽" },
+                            new { Value = "5", Text = "£" }
+                        },
+                        "Value",
+                        "Text",
+                        Model.DefaultCurrencyID
+                    ), new { @class = "form-control conf-list-box" })
+                </div>
+                <div class="form-group">
+                    <span>Перенос остатка </span>
+                    <span style="margin-left: 0.5rem" class="details-btn" data-toggle="modal" data-target="#RestModal">?</span>
+
+                    @Html.DropDownList("CarryoverRests", new SelectList(
+                       new[]
+                       {
+                    new { Value = "true", Text = "Да" },
+                    new { Value = "false", Text = "Нет" },
+                       },
+                       "Value",
+                       "Text",
+                       Model.CarryoverRests
+                   ), new { @class = "form-control conf-list-box" })
+
+                </div>
+
+
+                <div class="text-right" style="margin-top:2rem;">
+                    <input type="submit" value="Сохранить изменения" class="btn btn-sm btn-primary" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<!-- ************** -->
+<!-- Модальные окна -->
+<!-- ************** -->
+<!-- Переносить остаток Инфо -->
+<div class="modal fade" id="RestModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                Перенос остатка
+                <div class="close close-mdl" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="glyphicon glyphicon-remove"></span></div>
+            </div>
+            <div class="modal-body">
+                <label>Если у Вас остались средства на балансе за прошлый месяц, они появятся как доход в новом месяце.</label>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="~/Scripts/manage.js"></script>
+
+}

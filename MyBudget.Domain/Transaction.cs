@@ -27,5 +27,9 @@ namespace MyBudget.Domain
         public User User { get; set; }
 
         public string UserID { get; set; }
+
+        public Currency Currency { get; set; }
+        
+        public int CurrencyID { get; set; }
     }
 }

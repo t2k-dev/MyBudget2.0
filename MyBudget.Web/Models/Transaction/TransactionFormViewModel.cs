@@ -8,7 +8,7 @@ namespace MyBudget.Web.Models.Transaction
 {
     public class TransactionFormViewModel
     {
-        public IEnumerable<Category> Categories { get; set; }
+        public IEnumerable<Domain.Category> Categories { get; set; }
         public Domain.Transaction Transaction { get; set; }
     }
 }

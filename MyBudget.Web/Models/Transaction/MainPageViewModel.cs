@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MyBudget.Domain;
+using System.Collections.Generic;
 
 namespace MyBudget.Web.Models.Transaction
 {
@@ -9,7 +10,10 @@ namespace MyBudget.Web.Models.Transaction
         /// </summary>
         public string ListDate { get; set; }
 
-        public List<string> MyGoals { get; set; }
+        /// <summary>
+        /// User goals, debts and loans.
+        /// </summary>
+        public List<Goal> GoalsList { get; set; }
 
         /// <summary>
         /// User property DefaultCurrency.

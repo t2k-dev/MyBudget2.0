@@ -38,9 +38,14 @@ namespace MyBudget.Web.Controllers.Api
                 return null;
             }
 
-            var transactions = _transactionService.GetUserTransaction(userID, year, month);
+            var transactions = _transactionService.GetUserTransactions(userID, year, month);
 
-            return transactions.Select(t => new TransactionDTO() { 
+            if (transactions == null)
+            {
+                return null;
+            }
+
+            var transactionsList = transactions.Select(t => new TransactionDTO() { 
                 Amount = t.Amount,
                 CategoryName = t.Category.Name,
                 ID = t.ID.ToString(),
@@ -49,9 +54,9 @@ namespace MyBudget.Web.Controllers.Api
                 Name = t.Name,
                 TransactionDate = t.TransactionDate
                 });
+
+            return transactionsList;
         }
-
-
 
         // GET api/<controller>/5
         [HttpGet("{id}")]

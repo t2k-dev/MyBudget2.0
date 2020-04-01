@@ -13,36 +13,45 @@ using MyBudget.Web.Models.Transaction;
 
 namespace MyBudget.Web.Controllers
 {
+    [Authorize]
     public class TransactionController : Controller
     {
         #region ctor & fields
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ICategoryService _categoryService;
         private readonly ITransactionService _transactionService;
+        private readonly IAccountService _accountService;
+        private readonly IGoalService _goalService;
 
         public TransactionController(
             IHttpContextAccessor httpContextAccessor,
             ICategoryService categoryService,
-            ITransactionService transactionService
+            ITransactionService transactionService,
+            IAccountService accountService,
+            IGoalService goalService
             )
         {
             _httpContextAccessor = httpContextAccessor;
             _categoryService = categoryService;
             _transactionService = transactionService;
+            _accountService = accountService;
+            _goalService = goalService;
         }
         #endregion
 
-        [Authorize]
         public IActionResult MainPage()
         {
+            var userID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            
             var listDate = DateTime.Now;
 
             var viewModel = new MainPageViewModel()
             {
-                DefaultCurrency = "₸",
+                DefaultCurrency = _accountService.GetUserDefaultCurrencySymbol(userID),
                 ListDate = listDate.ToString("Y", new CultureInfo("ru-RU")),
-                MyGoals = new List<string>()
+                GoalsList = _goalService.GetUserGoals(userID)
             };
+
             return View(viewModel);
         }
 
@@ -50,18 +59,42 @@ namespace MyBudget.Web.Controllers
         {
             var userID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var categories = _categoryService.GetOrderedUserCategories(userID, isSpending);
-
+            var currency = _accountService.GetUserDefaultCurrency(userID);
+            
             var transaction = new Transaction()
             {
                 IsSpending = isSpending,
                 TransactionDate = DateTime.Now,
-                UserID = userID
+                UserID = userID,
+                Currency = currency, // TODO: refactor after adding multicurrency.
+                CurrencyID = currency.ID
             };
 
             var viewModel = new TransactionFormViewModel
             {
                 Transaction = transaction,
                 Categories = categories
+            };
+
+            return View("TransactionForm", viewModel);
+        }
+
+        public IActionResult Edit(string id)
+        {
+            var userID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var transaction = _transactionService.GetTransaction(id);
+            
+            /*if (transaction == null)
+            {
+                //return HttpNotFound();
+            } */           
+
+            var categories = _categoryService.GetOrderedUserCategories(userID, transaction.IsSpending);
+
+            var viewModel = new TransactionFormViewModel
+            {
+                Transaction = transaction,
+                Categories = categories,
             };
 
             return View("TransactionForm", viewModel);

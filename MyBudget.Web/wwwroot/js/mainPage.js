@@ -209,15 +209,15 @@ function loadTable() {
                     if (item.IsPlaned == true) {
                         op_class = "itm-opacity";
                     }
-                    var $td_amt = $('<td class="text-right amt ' + spendingClass + '">').text(opChar + String.fromCharCode(160) + item.Amount.toLocaleString("ru-RU") + ' ' + defCur).on("click", function () {
-                        window.location.href = "/Transactions//Edit/" + item.Id;
+                    var $td_amt = $('<td class="text-right amt ' + spendingClass + '">').text(opChar + String.fromCharCode(160) + item.amount.toLocaleString("ru-RU") + ' ' + defCur).on("click", function () {
+                        window.location.href = "/Transaction/Edit/" + item.id;
                     });
                     var $tr = $('<tr data-amt="' + item.Amount + '" data-IsPlaned="' + item.IsPlaned + '" data-tr-id="' + item.Id + '" data-IsSpending="' + item.IsSpending + '">').append(
                         /*Кнопка "запланировано"*/
                         $('<td class="text-center js-switch ' + op_class + '">').append($('<span class="glyphicon glyphicon-ok glyph-btn occured"></span>')),
                         /*Наименование*/
                         $("<td class='td-name'>").text(item.Name).append($('<div class="cat-name">').text(item.CategoryName)).on("click", function () {
-                            window.location.href = "/Transactions//Edit/" + item.Id;
+                            window.location.href = "/Transaction/Edit/" + item.id;
                         }),
 
                         /*$("<td>").text(item.Name).on("click", function () {

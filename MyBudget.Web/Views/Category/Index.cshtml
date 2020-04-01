@@ -1,0 +1,122 @@
+﻿@model MyBudget.Web.Models.Category.UserCategoriesViewModel
+@{
+    ViewBag.Title = "Мои категории";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Мои категории</h2>
+
+<div class="row">
+    <div class="col-md-5 offset-md-1">
+        <table class="table table-hover cat-tbl">
+            <col style="width: auto;">
+            <col style="width: 20px">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-danger text-center border-red">Расходы</th>
+                    <th scope="col" class="border-red"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var spendCategories = Model.Categories.Where(c => c.IsSpendingCategory == true).ToList();
+                    if (spendCategories.Count > 0)
+                    {
+                        foreach (var cat in spendCategories)
+                        {
+                            <tr>
+                                <td>@cat.Name</td>
+                                <td><span>@Html.ActionLink(" ", "DeleteFromMyCategories", "Category", new { id = cat.ID }, new { @class = "glyphicon glyphicon-trash glyph-btn" })</span></td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr class="no-record">
+                            <td class="text-center">Список категорий пуст</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <hr />
+        <div class="cat-add-btn-wr">
+            <a class="btn btn-primary new-trans" href="@Url.Action("AddSpendingCategory", "Category")"><span class="fas fa-plus"></span></a>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <table class="table table-hover cat-tbl">
+            <col style="width: auto;">
+            <col style="width: 20px">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-success text-center border-green">Доходы</th>
+                    <th scope="col" class="border-green"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var incomeCategories = Model.Categories.Where(c => c.IsSpendingCategory == false).ToList();
+                    if (incomeCategories.Count > 0)
+                    {
+                        foreach (var cat in incomeCategories)
+                        {
+                            <tr>
+                                <td>@cat.Name</td>
+                                <td>
+                                    <button data-id="@cat.ID" type="button" class="btn btn-link glyphicon glyphicon-trash glyph-btn js-del-rec" data-toggle="modal" data-target="#DelRecordModal"></button>
+                                </td>
+                            </tr>
+                        }
+
+                    }
+                    else
+                    {
+                        <tr class="no-record">
+                            <td class="text-center">Список категорий пуст</td>
+                        </tr>
+                    }
+
+
+                }
+            </tbody>
+        </table>
+        <hr />
+        <div class="cat-add-btn-wr">
+            <a class="btn btn-primary new-trans" href="@Url.Action("AddIncomeCategory", "Category")"><span class="fas fa-plus"></span></a>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Удаление категории-->
+<div class="modal fade" id="DelRecordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="close close-mdl" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="glyphicon glyphicon-remove"></span></div>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("DeleteFromMyCategories", "Category"))
+                {
+                    <div style="text-align:center">
+                        <div class="form-group">
+                            <label>Удалить выбранную категорию?</label>
+                            <input type="hidden" id="mb-del-recId" name="Id" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-default" style="margin:0 auto;">Нет</button>
+                            <button type="submit" class="btn btn-primary" style="margin:0 auto;">Да</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/js/categories.js"></script>
+}
