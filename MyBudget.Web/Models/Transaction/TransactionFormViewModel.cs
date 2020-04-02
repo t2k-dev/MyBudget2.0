@@ -1,9 +1,5 @@
 ﻿using MyBudget.Core.Models;
-using MyBudget.Domain;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyBudget.Web.Models.Transaction
 {

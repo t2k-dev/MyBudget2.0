@@ -25,7 +25,13 @@
                         foreach (var cat in spendCategories)
                         {
                             <tr>
-                                <td>@cat.Name</td>
+                                <td>
+                                    @cat.Name
+                                    @if (cat.CreatedByID != null)
+                                    {
+                                        <span class="fas fa-pen glyph-btn" style="margin-left:0.5rem; cursor: pointer;" onclick = 'window.location = "".concat("/Category/Edit/", @cat.ID);'></span>
+                                    }
+                                </td>
                                 <td>
                                     <button data-id="@cat.ID" type="button" class="btn btn-link fas fa-trash-alt glyph-btn js-del-rec" data-toggle="modal" data-target="#DelRecordModal"></button>
                                 </td>
@@ -64,7 +70,13 @@
                         foreach (var cat in incomeCategories)
                         {
                             <tr>
-                                <td onclick = 'window.location = "".concat("/Category/Edit/", @cat.ID);'>@cat.Name</td>
+                                <td>
+                                    @cat.Name
+                                    @if (cat.CreatedByID != null)
+                                    {
+                                        <span class="fas fa-pen glyph-btn" style="margin-left:0.5rem; cursor: pointer;" onclick = 'window.location = "".concat("/Category/Edit/", @cat.ID);'></span>
+                                    }
+                                </td>
                                 <td>
                                     <button data-id="@cat.ID" type="button" class="btn btn-link fas fa-trash-alt glyph-btn js-del-rec" data-toggle="modal" data-target="#DelRecordModal"></button>
                                 </td>
@@ -78,8 +90,6 @@
                             <td class="text-center">Список категорий пуст</td>
                         </tr>
                     }
-
-
                 }
             </tbody>
         </table>

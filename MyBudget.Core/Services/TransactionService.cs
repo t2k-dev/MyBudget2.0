@@ -2,7 +2,6 @@
 using MyBudget.Domain;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 using MyBudget.Core.Interfaces;
 using System;
@@ -77,6 +76,7 @@ namespace MyBudget.Core.Services
             transactionInDb.TransactionDate = transaction.TransactionDate;
             transactionInDb.IsPlaned = transaction.IsPlaned;
             transactionInDb.UserID = transaction.UserID;
+            transactionInDb.CurrencyID = transaction.CurrencyID;
 
             _context.SaveChanges();
         }

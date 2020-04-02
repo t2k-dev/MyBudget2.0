@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using MyBudget.Core.Models;
 using MyBudget.Domain;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MyBudget.Core.Mapping
 {
@@ -22,6 +19,9 @@ namespace MyBudget.Core.Mapping
 
             CreateMap<Transaction, TransactionModel>();
             CreateMap<TransactionModel, Transaction>();
+
+            CreateMap<Template, TemplateModel>();
+            CreateMap<TemplateModel, Template>();
         }
     }
 }

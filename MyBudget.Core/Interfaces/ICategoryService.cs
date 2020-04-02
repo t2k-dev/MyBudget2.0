@@ -1,8 +1,5 @@
 ﻿using MyBudget.Core.Models;
-using MyBudget.Domain;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MyBudget.Core.Interfaces
 {

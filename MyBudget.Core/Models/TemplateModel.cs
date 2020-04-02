@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MyBudget.Domain
+﻿namespace MyBudget.Core.Models
 {
-    public class Template
+    public class TemplateModel
     {
         public int ID { get; set; }
 
@@ -14,17 +10,17 @@ namespace MyBudget.Domain
 
         public int Day { get; set; }
 
-        public Category Category { get; set; }
-        
+        public CategoryModel Category { get; set; }
+
         public int CategoryID { get; set; }
 
         public bool IsSpending { get; set; }
 
-        public User User { get; set; }
+        public UserModel User { get; set; }
 
         public string UserID { get; set; }
 
-        public Currency Currency { get; set; }
+        public CurrencyModel Currency { get; set; }
 
         public int CurrencyID { get; set; }
 

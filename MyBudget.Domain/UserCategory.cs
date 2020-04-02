@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MyBudget.Domain
+﻿namespace MyBudget.Domain
 {
     public class UserCategory
     {        

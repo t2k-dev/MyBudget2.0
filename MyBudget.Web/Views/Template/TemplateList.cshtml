@@ -1,0 +1,137 @@
+﻿@model MyBudget.Web.Models.Template.TemplateListViewModel
+@{
+    ViewBag.Title = "Шаблоны платежей";
+}
+
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="container">
+            <div class="row" style="margin-bottom:0.4rem;">
+                <div class="col-4 text-left">
+                    <a class="btn btn-success new-trans" href="@Url.Action("Add", "Template",new { isSpending = false })"><span class="fas fa-plus"></span></a>
+                </div>
+                <div class="col-4 tbl-title">
+                    Шаблоны<span style="margin-left: 0.3rem" class="details-btn" data-toggle="modal" data-target="#Info">?</span>
+                </div>
+                <div class="col-4 text-right">
+                    <a class="btn btn-danger new-trans" href="@Url.Action("Add", "Template",new { isSpending = true })"><span class="fas fa-minus"></span></a>
+                </div>
+            </div>
+            <div class="row">
+                <div id="tbl-w" class="col-12">
+                    <table id="transactions_table" class="table table-hover tbl-myList" style="table-layout:fixed">
+                        <col style="width: 30px">
+                        <col style="width: auto">
+                        <col style="width: 100px">
+                        <col style="width: 30px">
+
+                        <tbody>
+                            @if (Model.Templates.Count > 0)
+                            {
+                                foreach (var template in Model.Templates)
+                                {
+                                    string amtClass, amtChar;
+                                    if (template.IsSpending)
+                                    {
+                                        amtChar = "- ";
+                                        amtClass = "text-danger";
+                                    }
+                                    else
+                                    {
+                                        amtChar = "+ ";
+                                        amtClass = "text-success";
+
+                                    }
+                                    <tr data-tr-id="@template.ID">
+                                        <td class="td-day">@template.Day</td>
+                                        <td class="td-name" onclick="window.location.href = '/Template//Edit/' + @template.ID;">
+                                            @{
+                                                if (String.IsNullOrEmpty(template.Name))
+                                                {
+                                                    template.Name = "---";
+                                                }
+                                            }
+                                            @template.Name
+                                            <div class="cat-name">  @template.Category.Name</div>
+                                        </td>
+                                        <td onclick="window.location.href = '/Template//Edit/' + @template.ID;" class="text-right amt @amtClass">@amtChar @template.Amount.ToString("### ### ### ###") @template.Currency.Symbol</td>
+                                        <td>
+                                            <button type="button" class="btn btn-link fas fa-trash-alt glyph-btn js-del-tmp" data-toggle="modal" data-target="#DelRecordModal"></button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr class="no-records">
+                                    <td colspan="4">У Вас пока ещё нет шаблонов</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div style="height:22px;width:100%;margin-bottom: 5px;">
+                    <div id="btn-tbl-exp" class="del-btn text-center"><span class="glyph-btn glyphicon glyphicon-chevron-down glyph-btn"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Удаление шаблона-->
+<div class="modal fade" id="DelRecordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="close close-mdl" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="glyphicon glyphicon-remove"></span></div>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Delete", "Template"))
+                {
+                    <div style="text-align:center">
+                        <div class="form-group">
+                            <label>Удалить выбранный шаблон?</label>
+                            <input type="hidden" id="mb-del-tempId" name="id" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-default" style="margin:0 auto;">Нет</button>
+                            <button type="submit" class="btn btn-primary" style="margin:0 auto;">Да</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Подсказка -->
+<div class="modal fade" id="Info" tabindex="-1" role="dialog" aria-labelledby="Info">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                Шаблоны
+                <div class="close close-mdl" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="glyphicon glyphicon-remove"></span>
+                </div>
+            </div>
+            <div class="modal-body info-body">
+                <p>
+                    На этой странице Вы можете добавить платежи для того, чтобы они автоматически создавались каждый месяц.
+                </p>
+                <p>
+                    Они создаются <b style="color:#395971;">запланированными</b>. Вам надо будет просто подтвердить их, нажав кнопку
+                    "<span style="opacity: 0.4; margin-right:0.2rem;color: #888888;" class="glyphicon glyphicon-ok"></span>".
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script src="~/js/templateList.js"></script>
+}
+

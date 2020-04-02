@@ -1,0 +1,122 @@
+﻿@model MyBudget.Web.Models.Template.TemplateFormViewModel
+@{
+    ViewBag.Title = "Шаблон";
+}
+
+<div class="row">
+    <div class="col-md-4 offset-md-4 frm1">
+
+        @if (Model.Template.ID.ToString() != "")
+        {
+            <h3 class="form-title">Редактировать</h3>
+        }
+        else if (Model.Template.IsSpending == true)
+        {
+            <h3 class="form-title">Добавить расход</h3>
+        }
+        else if (Model.Template.IsSpending == false)
+        {
+            <h3 class="form-title">Добавить доход</h3>
+        }
+
+
+        @using (Html.BeginForm("Save", "Template"))
+        {
+
+    <form-group>
+        <div class="form-group">
+            <label for="Transaction_Amount">Сумма <span class="txt-orange">*</span></label>
+            <div>
+                @Html.TextBoxFor(m => m.Template.Amount, new { @class = "form-control-lg amt-inp jq-money", autocomplete = "off", maxlength = "13", type = "tel", autofocus = "true" })
+                <span class="cur-inp">@Model.Template.Currency.Symbol</span>
+                @Html.ValidationMessageFor(m => m.Template.Amount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="Transaction_CategoryId">Категория</label>
+            @Html.DropDownListFor(m => m.Template.CategoryID, new SelectList(Model.Categories, "ID", "Name"), new { @class = "form-control inp-short" })
+            <a href="@Url.Action("UserCategories", "Category" )" class="glyphicon glyphicon-cog glyph-btn glyph-btn-lg"></a>
+        </div>
+
+
+        <div class="form-group">
+            <label for="Transaction_Name">Описание</label>
+            @Html.TextBoxFor(m => m.Template.Name, new { @class = "form-control", autocomplete = "off", spellcheck = "false" })
+        </div>
+
+        <div class="form-group">
+
+            <div>
+                <label for="Template_Day">Число месяца <span class="txt-orange">*</span></label>
+                @Html.DropDownListFor(t => t.Template.Day, Model.Days, new { @class = "form-control short-dropdown" })
+                @Html.ValidationMessageFor(m => m.Template.Amount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <hr />
+        @Html.HiddenFor(m => m.Template.IsSpending)
+        @Html.HiddenFor(m => m.Template.ID)
+        @Html.HiddenFor(m => m.Template.UserID)
+        @Html.HiddenFor(m => m.Template.CurrencyID)
+        <div class="col-md-10 offset-md-1  btn-cntnr">
+            <button type="submit" class="btn btn-success form-btn">Сохранить</button>
+        </div>
+
+    </form-group>
+        }
+
+    </div>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            /*Для поля Сумма*/
+            var $amt = $('.jq-money');
+
+            if ($amt.val() == '0') {
+                $amt.val('');
+            }
+
+            if ($amt.val() !== '') {
+                var num = parseInt($amt.val(), 10);
+                $amt.val(num.toLocaleString("ru-RU"));
+            }
+
+            $amt.on("keyup", function (event) {
+                var selection = window.getSelection().toString();
+                if (selection !== '') { return; }
+
+                if ($.inArray(event.keyCode, [38, 40, 37, 39]) !== -1) { return; }
+
+                var $this = $(this);
+                var input = $this.val();
+
+                input = input.replace(/[\D\s\._\-]+/g, "");
+                input = input ? parseInt(input, 10) : 0;
+                $this.val(function () {
+                    return (input === 0) ? "" : input.toLocaleString("ru-RU");
+                });
+            });
+
+            $('form').submit(function () {
+                var textValue = $amt.val();
+                $amt.val(textValue.replace(/[\D\s\._\-]+/g, ""));
+            });
+            /*---*/
+        });
+
+
+        jQuery('#sandbox-container').datepicker({
+            format: "dd.mm.yyyy",
+            minViewMode: 0,
+            todayBtn: "linked",
+            language: "ru",
+            autoclose: true,
+            defaultViewDate: { year: 2018, month: 01, day: 01 }
+        });
+    </script>
+
+}

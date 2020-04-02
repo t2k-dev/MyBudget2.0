@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyBudget.Core.Extensions;
 using MyBudget.Core.Interfaces;
 using MyBudget.Core.Models;
-using MyBudget.Domain;
 using MyBudget.Web.Models.Transaction;
 
 namespace MyBudget.Web.Controllers
