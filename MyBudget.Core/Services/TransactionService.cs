@@ -42,8 +42,8 @@ namespace MyBudget.Core.Services
 
             var transactions = _context.Transactions
                 .Where(transaction => transaction.UserID == userID
-                    //&& transaction.TransactionDate.Year == year
-                    //&& transaction.TransactionDate.Month == month
+                    && transaction.TransactionDate.Year == year
+                    && transaction.TransactionDate.Month == month
                     )
                 .Include(transaction => transaction.Category)
                 .ToList();
@@ -85,6 +85,14 @@ namespace MyBudget.Core.Services
         {
             var transaction = _context.Transactions.SingleOrDefault(t => t.ID == Guid.Parse(transactionID));
             _context.Transactions.Remove(transaction);
+            _context.SaveChanges();
+        }
+
+        public void ChangePlannedStatus(string transactionID)
+        {
+            var transactionInDb = _context.Transactions.SingleOrDefault(t => t.ID == Guid.Parse(transactionID));
+            transactionInDb.IsPlaned = !transactionInDb.IsPlaned;
+            
             _context.SaveChanges();
         }
     }

@@ -8,12 +8,15 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome.css" />
 
+    <link href="~/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="~/css/datapicker.css" rel="stylesheet" />
+
     <script src="https://kit.fontawesome.com/50679705e6.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header style="background-color:#395971 !important">
         <div class="container">
-            <div class="row">               
+            <div class="row">
                 <div class="col-md-10 offset-md-1" style="padding:0;">
                     <div class="navbar navbar-expand-lg navbar-dark bg-dark">
 
@@ -44,8 +47,8 @@
             <div class="row" style="padding-top:15px;">
                 <div class="col-md-4 offset-md-4 text-center">
 
-                    <h6>&copy;2019 – MyBudget</h6>
-                    <h6 style="font-size: 0.8rem;"><span class="glyphicon glyphicon-envelope" style="margin-right:0.2rem;color:#888;"></span> <a href="mailto:MyBudgetTeam@yandex.kz">mybudgetteam@yandex.kz</a></h6>
+                    <h6>&copy;2020 – MyBudget</h6>
+                    <h6 style="font-size: 0.8rem;"><span class="fas fa-envelope" style="margin-right:0.2rem;color:#888;"></span> <a href="mailto:MyBudgetTeam@yandex.kz">mybudgetteam@yandex.kz</a></h6>
                 </div>
                 <div class="col-md-4">
                 </div>
@@ -54,6 +57,9 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/js/locales/bootstrap-datepicker.ru.min.js"></script>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
     <script type="text/javascript">

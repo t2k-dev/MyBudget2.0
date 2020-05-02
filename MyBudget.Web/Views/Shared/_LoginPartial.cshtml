@@ -10,9 +10,9 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
-            <li class="nav-item"><a class="nav-link" href="@Url.Action("Pie","Graph")"><span style="margin-right:10px;" class="glyphicon glyphicon-stats"></span>Графики</a></li>
+            <li class="nav-item"><a class="nav-link" href="@Url.Action("Pie","Graph")"><span style="margin-right:10px;" class="fas fa-signal"></span>Графики</a></li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="themes"><span class="glyphicon glyphicon-flag" style="margin-right:3px;"></span> Цели, долги <span class="caret"></span></a>
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="themes"><span class="fas fa-calendar-check" style="margin-right:3px;"></span> Цели, долги <span class="caret"></span></a>
                 <div class="dropdown-menu" aria-labelledby="themes">
                     <a class="dropdown-item" href="@Url.Action("Add", "Goal", new { type = (byte)GoalTypes.Goal} )">Добавить цель</a>
                     <a class="dropdown-item" href="@Url.Action("Add", "Goal", new { type = (byte)GoalTypes.Debt} )">Взять в долг</a>
@@ -21,7 +21,7 @@
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="themes"><span class="glyphicon glyphicon-user" style="margin-right:3px;"></span> @User.Identity.Name <span class="caret"></span></a>
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="themes"><span class="fas fa-user" style="margin-right:3px;"></span> @User.Identity.Name <span class="caret"></span></a>
                 <div class="dropdown-menu" aria-labelledby="themes">
                     <a class="dropdown-item" href="@Url.Action("Manage", "Account")">Мой кабинет</a>
                     <div class="dropdown-divider"></div>
@@ -42,7 +42,7 @@ else
 {
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <a id="registerLink" class="nav-link" href="@Url.Action("Register", "Account")">Регистрация <i class="fa fa-user-plus"></i></a>
+            <a id="registerLink" class="nav-link" href="@Url.Action("Register", "Account")"><i class="fa fa-user-plus"></i> Регистрация</a>
         </li>
     </ul>
 }

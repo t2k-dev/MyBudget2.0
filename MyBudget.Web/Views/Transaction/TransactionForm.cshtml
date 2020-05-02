@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md-4 offset-md-4 frm1">
 
-        @if (Model.Transaction.ID.ToString() != "")
+        @if (Model.Transaction.ID != Guid.Empty)
         {
             <h3 class="form-title">Редактировать</h3>
         }
@@ -38,7 +38,7 @@
                 <div class="form-group">
                     <label for="Transaction_CategoryId">Категория</label>
                     @Html.DropDownListFor(m => m.Transaction.CategoryID, new SelectList(Model.Categories, "ID", "Name"), new { @class = "form-control inp-short" })
-                    <a href="@Url.Action("UserCategories", "Category" )" class="glyphicon glyphicon-cog glyph-btn glyph-btn-lg"></a>
+                    <a href="@Url.Action("Index", "Category" )" class="fas fa-cog glyph-btn glyph-btn-lg"></a>
                 </div>
 
 
@@ -52,11 +52,11 @@
                     <div>
                         @if (Model.Transaction == null)
                         {
-                            <input type="text" id="sandbox-container" class="form-control lil-dp" name="Transaction.TransDate" value="@DateTime.Now.ToString("dd.MM.yyyy")" readonly="yes">
+                            <input type="text" id="sandbox-container" class="form-control lil-dp" name="Transaction.TransactionDate" value="@DateTime.Now.ToString("dd.MM.yyyy")" readonly>
                         }
                         else
                         {
-                            <input type="text" id="sandbox-container" class="form-control lil-dp" name="Transaction.TransDate" value="@Model.Transaction.TransactionDate.ToString("dd.MM.yyyy")" readonly="yes">
+                            <input type="text" id="sandbox-container" class="form-control lil-dp" name="Transaction.TransactionDate" value="@Model.Transaction.TransactionDate.ToString("dd.MM.yyyy")" readonly>
                         }
                     </div>
                 </div>

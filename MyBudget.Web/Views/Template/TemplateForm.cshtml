@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-md-4 offset-md-4 frm1">
 
-        @if (Model.Template.ID.ToString() != "")
+        @if (Model.Template.ID != 0)
         {
             <h3 class="form-title">Редактировать</h3>
         }
@@ -37,7 +37,7 @@
         <div class="form-group">
             <label for="Transaction_CategoryId">Категория</label>
             @Html.DropDownListFor(m => m.Template.CategoryID, new SelectList(Model.Categories, "ID", "Name"), new { @class = "form-control inp-short" })
-            <a href="@Url.Action("UserCategories", "Category" )" class="glyphicon glyphicon-cog glyph-btn glyph-btn-lg"></a>
+            <a href="@Url.Action("UserCategories", "Category" )" class="fas fa-cog glyph-btn glyph-btn-lg"></a>
         </div>
 
 
@@ -109,13 +109,13 @@
         });
 
 
-        jQuery('#sandbox-container').datepicker({
+        $('#sandbox-container').datepicker({
             format: "dd.mm.yyyy",
             minViewMode: 0,
             todayBtn: "linked",
             language: "ru",
             autoclose: true,
-            defaultViewDate: { year: 2018, month: 01, day: 01 }
+            defaultViewDate: { year: 2020, month: 01, day: 01 }
         });
     </script>
 

@@ -13,9 +13,9 @@
                 <div class="container">
                     <div class="row">
                         <div style="margin: 0 auto;">
-                            <span class="glyphicon glyphicon-menu-left cal-switch" onclick="setingDate(2)"></span>
+                            <span class="fas fa-angle-left cal-switch" onclick="setingDate(2)"></span>
                             <input type="button" id="sandbox-container" value="@Model.ListDate">
-                            <span class="glyphicon glyphicon-menu-right cal-switch" onclick="setingDate(1)"></span>
+                            <span class="fas fa-angle-right cal-switch" onclick="setingDate(1)"></span>
                         </div>
                     </div>
                 </div>
@@ -35,10 +35,12 @@
         <div class="row">
             <div id="tbl-w" class="col-12">
                 <table id="transactions_table" class="table table-hover tbl-myList">
-                    <col style="width: 25px">
-                    <col style="width: auto">
-                    <col style="width: 7rem">
-                    <col style="width: 30px">
+                    <colgroup>
+                        <col style="width: 25px">
+                        <col style="width: auto">
+                        <col style="width: 7rem">
+                        <col style="width: 30px">
+                    </colgroup>
                     <tbody></tbody>
                 </table>
             </div>
@@ -52,8 +54,10 @@
     <div class="col-md-3">
         <div class="w-rest">
             <table class="tbl-rest" style="">
-                <col style="width: 50%">
-                <col style="width: 50%">
+                <colgroup>
+                    <col style="width: 50%">
+                    <col style="width: 50%">
+                </colgroup>
                 <tr>
                     <td class="rest-type">Баланс</td>
                     <td class="rest-type">
@@ -88,7 +92,7 @@
 
                         <div class="crd-itm @opacityClass">
                             <div class="crd-content">
-                                <button data-goal-id="@goal.ID" type="button" class="btn btn-link glyphicon glyphicon-trash del-btn-crd js-del-goal" data-toggle="modal" data-target="#DelTemplateModal"></button>
+                                <button data-goal-id="@goal.ID" type="button" class="btn btn-link fas fa-trash-alt del-btn-crd js-del-goal" data-toggle="modal" data-target="#DelTemplateModal"></button>
 
                                 <a class="crd-caption" href="@Url.Action("Edit", "Goal", new { id = goal.ID})">@goal.GoalName </a>
                                 @if (goal.IsActive == true)
@@ -128,7 +132,7 @@
                         string opacityClass = debt.IsActive == false ? "goalIsFinished" : "";
                         <div class="crd-itm @opacityClass">
                             <div class="crd-content">
-                                <button data-goal-id="@debt.ID" type="button" class="btn btn-link glyphicon glyphicon-trash del-btn-crd js-del-goal" data-toggle="modal" data-target="#DelTemplateModal"></button>
+                                <button data-goal-id="@debt.ID" type="button" class="btn btn-link fas fa-trash-alt del-btn-crd js-del-goal" data-toggle="modal" data-target="#DelTemplateModal"></button>
 
                                 <a class="crd-caption" href="@Url.Action("Edit", "Goal", new { id = debt.ID})">@debt.GoalName </a>
                                 @if (debt.IsActive == true)
@@ -170,7 +174,7 @@
                         string opacityClass = loan.IsActive == false ? "goalIsFinished" : "";
                         <div class="crd-itm @opacityClass">
                             <div class="crd-content">
-                                <button data-goal-id="@loan.ID" type="button" class="btn btn-link glyphicon glyphicon-trash del-btn-crd js-del-goal" data-toggle="modal" data-target="#DelTemplateModal"></button>
+                                <button data-goal-id="@loan.ID" type="button" class="btn btn-link fas fa-trash-alt del-btn-crd js-del-goal" data-toggle="modal" data-target="#DelTemplateModal"></button>
                                 <a class="crd-caption" href="@Url.Action("Edit", "Goal", new { id = loan.ID})">@loan.GoalName </a>
                                 @if (loan.IsActive == true)
                                 {
@@ -325,8 +329,8 @@
                     <b style="color:#395971;">"Плановый"</b> баланс позволяет отследить остаток средств с учетом ещё не проведенных, но запланированных выплат.
                 </p>
                 <div style="width: 200px; margin: 0 auto 1rem">
-                    <span style="margin-right: 1rem;color: #888888;" class="glyphicon glyphicon-ok"></span> проведенный платеж<br />
-                    <span style="opacity: 0.4; margin-right:1rem;color: #888888;" class="glyphicon glyphicon-ok"></span> запланированный платеж
+                    <span style="margin-right: 1rem;color: #888888;" class="fas fa-check glyph-btn"></span> проведенный платеж<br />
+                    <span style="opacity: 0.4; margin-right:1rem;color: #888888;" class="fas fa-check glyph-btn occured"></span> запланированный платеж
                 </div>
                 <p>
                     Чтобы перевести платеж в статус "запланированный" нажмите на галочку перед наименованием платежа.
@@ -407,6 +411,7 @@
 @section scripts
 {
     <script src="~/js/mainPage.js"></script>
+
     <!--<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>-->
 }
 

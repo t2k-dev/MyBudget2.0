@@ -21,11 +21,12 @@
             <div class="row">
                 <div id="tbl-w" class="col-12">
                     <table id="transactions_table" class="table table-hover tbl-myList" style="table-layout:fixed">
-                        <col style="width: 30px">
-                        <col style="width: auto">
-                        <col style="width: 100px">
-                        <col style="width: 30px">
-
+                        <colgroup>
+                            <col style="width: 30px">
+                            <col style="width: auto">
+                            <col style="width: 100px">
+                            <col style="width: 30px">
+                        </colgroup>
                         <tbody>
                             @if (Model.Templates.Count > 0)
                             {

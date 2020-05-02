@@ -1,0 +1,106 @@
+﻿@model MyBudget.Web.Models.Graph.PieViewModel
+@{
+    ViewBag.Title = "График расходов";
+}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h2 class="text-center">График расходов</h2>
+
+        <div class="row" style="margin-bottom:0.4rem;margin-top: 1rem;">
+            <div class="col-6">
+                <div id="loadCurrent" class="btn-graph-term btn-default-active">За этот месяц</div>
+            </div>
+            <div class="col-6 text-right">
+                <button id="btnShowPeriod" type="button" class="btn-graph-term" data-toggle="modal" data-target="#graphPeriod">За период...</button>
+
+            </div>
+        </div>
+        <div id="no-data-text" class="no-graph">За указанный период данных нет</div>
+        <div id="canvas-holder" style="width:100%;">
+            <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                </div>
+            </div>
+            <canvas id="chart-area" width="762" height="381" class="chartjs-render-monitor" style="display: block; width: 762px; height: 381px;"></canvas>
+        </div>
+
+
+        <input id="UserId" type="hidden" value="@Model.UserID" />
+        <input id="DefCurrency" type="hidden" value="@Model.DefaultCurrency" />
+        <table id="graphLegend" class="table tbl-pie-legend">
+        </table>
+
+    </div>
+</div>
+
+
+<div class="modal fade" id="graphPeriod" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                За период
+                <div class="close close-mdl" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="glyphicon glyphicon-remove"></span></div>
+            </div>
+            <div class="modal-body">
+                <div style="text-align:center">
+                    <div style="width:170px;margin:0 auto;">
+                        <div class="form-group row" style="padding:0 1rem;">
+                            <label for="ExcelSince" class="col-form-label" style="margin-right:1rem">С</label>
+                            <input type="text" placeholder="дд-мм-гггг" id="ExcelSince" name="ExcelSince" class="form-control dt-inp-modal" value="" autocomplete="off">
+                            <span class="bg-calendar"></span>
+                        </div>
+                        <div class="form-group row" style="padding:0 1rem;">
+                            <label for="ExcelTill" class="col-form-label" style="margin-right:0.5rem;">по</label>
+                            <input type="text" placeholder="дд-мм-гггг" id="ExcelTill" name="ExcelTill" class="form-control dt-inp-modal" value="" autocomplete="off">
+                            <span class="bg-calendar"></span>
+                        </div>
+                    </div>
+                    <p class="hlp-text">
+                        * чтобы выгрузить все транзакции оставьте поля даты незаполненными
+                    </p>
+                    <div class="modal-footer">
+                        <div id="loadPeriod" class="btn btn-success" style="margin:0 auto;padding:0.5rem 3rem;">Выгрузить</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/chart/Chart.bundle.js"></script>
+    <script src="~/js/chart/utils.js"></script>
+    <script src="~/js/chart/graph.js"></script>
+    <script>
+
+        var config = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: [],
+                    backgroundColor: [],
+                    label: 'Dataset 1'
+                }],
+                labels: []
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    display: false,
+                    position: 'bottom',
+                    fullWidth: false
+                }
+            }
+        };
+
+        window.onload = function () {
+            var ctx = document.getElementById('chart-area').getContext('2d');
+            window.myPie = new Chart(ctx, config);
+        };
+
+    </script>
+}

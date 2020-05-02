@@ -27,7 +27,6 @@ namespace MyBudget.Web.Controllers.Api
         }
         #endregion
 
-        // GET: api/<controller>
         [HttpGet]
         public IEnumerable<TransactionDTO> Get(int year, int month)
         {
@@ -45,7 +44,7 @@ namespace MyBudget.Web.Controllers.Api
                 return null;
             }
 
-            var transactionsList = transactions.Select(t => new TransactionDTO() { 
+            var transactionsList = transactions.Select(t => new TransactionDTO() {
                 Amount = t.Amount,
                 CategoryName = t.Category.Name,
                 ID = t.ID.ToString(),
@@ -58,23 +57,16 @@ namespace MyBudget.Web.Controllers.Api
             return transactionsList;
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpPut("SwitchPlaned/{id}")]
+        public IActionResult SwitchPlaned(string id)
         {
-            return "value";
-        }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            _transactionService.ChangePlannedStatus(id);
 
-        // POST api/<controller>
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
+            return Ok();
         }
 
         // DELETE api/<controller>/5

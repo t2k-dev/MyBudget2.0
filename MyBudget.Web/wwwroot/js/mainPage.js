@@ -1,24 +1,24 @@
-﻿$(document).ready(function () {    
+﻿$(document).ready(function () {
     loadTable();
 
-/*    jQuery('#sandbox-container').datepicker({
+    $('#sandbox-container').datepicker({
         format: "MM yyyy",
         minViewMode: 1,
         todayBtn: "linked",
         language: "ru",
         autoclose: true
     }).change(function () {
-        var month = jQuery(this).datepicker("getDate").getMonth() + 1;
+        var month = $(this).datepicker("getDate").getMonth() + 1;
         var mnthStr = (month < 10) ? '0' + month.toString() : month.toString();
-        var year = jQuery(this).datepicker("getDate").getFullYear().toString();
+        var year = $(this).datepicker("getDate").getFullYear().toString();
         var dt = mnthStr + year.toString();
-        //window.location.href = '/Transactions/MyBudget/' + dt;
+        window.location.href = '/Transaction/MainPage/' + dt;
 
         loadTable();
     });
 
     // Параметры для экспорта в Excel
-    jQuery('#ExcelSince').datepicker({
+    $('#ExcelSince').datepicker({
         format: "dd.mm.yyyy",
         minViewMode: 0,
         todayBtn: "linked",
@@ -26,30 +26,28 @@
         autoclose: true
     });
 
-    jQuery('#ExcelTill').datepicker({
+    $('#ExcelTill').datepicker({
         format: "dd.mm.yyyy",
         minViewMode: 0,
         todayBtn: "linked",
         language: "ru",
         autoclose: true
     });
-    */
+
     $('#btnExportExcel').on('click', function () {
         $('#ExcelSince').val('');
         $('#ExcelTill').val('');
     })
 
-    /*  Высота таблицы  */
     $('#btnPutMoney').on('click', function () {
-
         amtInp = $('#Amount');
         if (amtInp.val() == '') {
             amtInp.addClass('input-validation-error');
             return false;
         }
-
     })
 
+    /*  Высота таблицы  */
     $('#btn-tbl-exp').on("click", function () {
         var span = $(this).find("span");
         if ($("#tbl-w").hasClass("tbl-max") == true) {
@@ -62,11 +60,10 @@
             $('#tbl-w').addClass("tbl-max", 1000);
             span.removeClass("glyphicon-chevron-down");
             span.addClass("glyphicon-chevron-up");
-
         }
     });
 
-    /*Пополнить цель/долг*/
+    /*Модальное окно "Пополнить цель/долг"*/
     $('.js-pay-goal').on("click", function () {
         $('#Amount').removeClass('input-validation-error')
         $('#putOnId').val($(this).attr("data-goal-id"));
@@ -82,8 +79,6 @@
     $('.js-del-goal').on("click", function () {
         $('#mb-del-goallId').val($(this).attr("data-goal-id"));
     });
-
-
 
     /*Для поля Сумма*/
     var $amt = $('.jq-money');
@@ -135,17 +130,17 @@
     /*---*/
 });
 
-/*jQuery('#sandbox-container').datepicker({
+$('#sandbox-container').datepicker({
     format: "MM yyyy",
     minViewMode: 1,
     todayBtn: "linked",
     language: "ru",
     autoclose: true,
-    defaultViewDate: { year: 2018, month: 01, day: 01 }
-});*/
+    defaultViewDate: { year: 2020, month: 01, day: 01 }
+});
 
-/*function setingDate(r) {
-    var dt = jQuery('#sandbox-container').datepicker('getDate');
+function setingDate(r) {
+    var dt = $('#sandbox-container').datepicker('getDate');
     var dt1 = new Date();
 
     if (r == 1) {
@@ -154,41 +149,33 @@
         dt1 = new Date(dt.setMonth(dt.getMonth() - 1));
     }
 
-    jQuery('#sandbox-container').datepicker('update', dt1);
-};*/
+    $('#sandbox-container').datepicker('update', dt1);
+};
 
 
 function loadTable() {
-
-    //var month = $('#sandbox-container').datepicker("getDate").getMonth() + 1;
-    //var mnthStr = (month < 10) ? '0' + month.toString() : month.toString();
-    //var year = $('#sandbox-container').datepicker("getDate").getFullYear().toString();
-    //var dt = mnthStr + year.toString();
-
+    var month = $('#sandbox-container').datepicker("getDate").getMonth() + 1;
+    var year = $('#sandbox-container').datepicker("getDate").getFullYear().toString();
 
     /*Высота таблицы*/
     var heightTbl = $(window).height() - 260;
     $('#tbl-w').height(heightTbl + 'px');
 
-
     $.ajax({
-        url: "/api/transaction?year=" + 2020 + "&month=" + 03,
+        url: "/api/transaction?year=" + year + "&month=" + month,
         method: "GET",
         success: function (result) {
             $('#transactions_table tbody').remove();
-
-
 
             if (result == false) {
                 $('#btn-tbl-exp').hide();
             }
             if (result != '') {
-
                 var defCur = $(DefCurr).val();
                 $.each(result, function (i, item) {
                     var spendingClass = '';
 
-                    if (item.IsSpending == true) {
+                    if (item.isSpending == true) {
                         var opChar = '-'
                         spendingClass = 'text-danger'
                     }
@@ -204,25 +191,20 @@ function loadTable() {
                         item.CategoryName = "";
                     }
 
-
                     var op_class = "";
-                    if (item.IsPlaned == true) {
+                    if (item.isPlaned == true) {
                         op_class = "itm-opacity";
                     }
                     var $td_amt = $('<td class="text-right amt ' + spendingClass + '">').text(opChar + String.fromCharCode(160) + item.amount.toLocaleString("ru-RU") + ' ' + defCur).on("click", function () {
                         window.location.href = "/Transaction/Edit/" + item.id;
                     });
-                    var $tr = $('<tr data-amt="' + item.Amount + '" data-IsPlaned="' + item.IsPlaned + '" data-tr-id="' + item.id + '" data-IsSpending="' + item.IsSpending + '">').append(
+                    var $tr = $('<tr data-amt="' + item.amount + '" data-IsPlaned="' + item.isPlaned + '" data-tr-id="' + item.id + '" data-IsSpending="' + item.isSpending + '">').append(
                         /*Кнопка "запланировано"*/
-                        $('<td class="text-center js-switch ' + op_class + '">').append($('<span class="glyphicon glyphicon-ok glyph-btn occured"></span>')),
+                        $('<td class="text-center js-switch ' + op_class + '">').append($('<span class="fas fa-check glyph-btn occured"></span>')),
                         /*Наименование*/
-                        $("<td class='td-name'>").text(item.Name).append($('<div class="cat-name">').text(item.CategoryName)).on("click", function () {
+                        $("<td class='td-name'>").text(item.name).append($('<div class="cat-name">').text(item.categoryName)).on("click", function () {
                             window.location.href = "/Transaction/Edit/" + item.id;
                         }),
-
-                        /*$("<td>").text(item.Name).on("click", function () {
-                            window.location.href = "/Transactions//Edit/" + item.Id;
-                        }),*/
                         /*Сумма*/
                         $td_amt,
                         /*Кнопка "Удалить"*/
@@ -240,14 +222,13 @@ function loadTable() {
                     $('#btn-tbl-exp').hide();
                 }
 
-
                 /*Нажатие на кнопку "Запланировано"*/
                 var $balten = $('#balten');
                 $('.js-switch').on('click', function () {
                     var switch_btn = $(this);
                     var $tr = switch_btn.closest('tr');
                     $.ajax({
-                        url: "/api/transactions/SwitchPlaned/?Id=" + $tr.attr("data-tr-id"),
+                        url: "/api/transaction/SwitchPlaned/" + $tr.attr("data-tr-id"),
                         method: "PUT",
                         success: function () {
                             var $balten = $('#balten');
@@ -314,7 +295,6 @@ function loadTable() {
                 $balten_pl.closest('td').removeClass('text-success');
                 $balten_pl.closest('td').removeClass('text-danger');
                 $('#balten_pl').text('0');
-
             }
         }
 
@@ -330,7 +310,6 @@ function countBalance() {
 
         if ($tr.attr("data-IsSpending") == 'true') {
 
-
             if ($tr.attr("data-IsPlaned") == 'false') {
                 bal -= parseInt($tr.attr("data-amt"));
                 bal_pl -= parseInt($tr.attr("data-amt"));
@@ -338,7 +317,6 @@ function countBalance() {
                 bal_pl -= parseInt($tr.attr("data-amt"));
             }
         } else {
-
             if ($tr.attr("data-IsPlaned") == 'false') {
                 bal += parseInt($tr.attr("data-amt"));
                 bal_pl += parseInt($tr.attr("data-amt"));
@@ -347,8 +325,6 @@ function countBalance() {
             }
         }
     });
-
-
 
     var $balten = $('#balten');
     var $td = $balten.closest('td');

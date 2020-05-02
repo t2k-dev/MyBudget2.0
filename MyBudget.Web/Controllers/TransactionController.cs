@@ -37,11 +37,13 @@ namespace MyBudget.Web.Controllers
         }
         #endregion
 
-        public IActionResult MainPage()
+        public IActionResult MainPage(string id)
         {
             var userID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             
-            var listDate = DateTime.Now;
+            var listDate = string.IsNullOrWhiteSpace(id)
+                ? DateTime.Now
+                : DateTime.ParseExact(id, "MMyyyy", CultureInfo.InvariantCulture, DateTimeStyles.None);
 
             var viewModel = new MainPageViewModel()
             {

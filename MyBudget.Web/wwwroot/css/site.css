@@ -175,10 +175,14 @@ body {
 
 .dropdown-item {
     padding: 0.8rem 1rem;
+    color: #FFF;
+    font-size:0.8rem;
+    font-weight:300;
 }
 
     .dropdown-item:hover {
         background-color: #2e485a !important;
+        color: #FFF;
     }
 
 .nav-link {
@@ -405,12 +409,13 @@ body {
 }
 
 .bg-calendar {
-    background: transparent url('./img/calendar.svg')0 0 no-repeat;
+    background: transparent url('../img/calendar.svg')0 0 no-repeat;
     width: 1.4rem;
     margin: 0.35rem 0 0 0.3rem;
 }
 /*MyBudget*/
 .cal-switch {
+    font-size: 2rem;
     cursor: pointer;
     top: -3px;
     color: #d2d2d2;
@@ -640,7 +645,7 @@ body {
     padding: 0;
     height: 28px;
     width: 34px;
-    background: transparent url('./img/cash.svg')0 0 no-repeat;
+    background: transparent url('../img/cash.svg')0 0 no-repeat;
     opacity: 0.7;
 }
 
@@ -655,7 +660,7 @@ body {
     padding: 0;
     height: 24px;
     width: 34px;
-    background: transparent url('./img/cash_g.svg')0 0 no-repeat;
+    background: transparent url('../img/cash_g.svg')0 0 no-repeat;
 }
 
 

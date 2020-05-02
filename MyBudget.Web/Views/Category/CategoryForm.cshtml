@@ -1,11 +1,16 @@
 ﻿@model MyBudget.Web.Models.Category.CategoryFormViewModel
 
-@{
-    ViewBag.Title = "CategoryForm";
-}
-
 <div class="col-md-4 offset-md-4">
-    <h2 class="form-title">Новая категория</h2>
+    @if (Model.Category.ID != 0)
+    {
+        <h3 class="form-title">Редактировать</h3>
+        ViewBag.Title = "Редактировать категорию";
+    }
+    else
+    {
+        <h3 class="form-title">Новая категория</h3>
+        ViewBag.Title = "Новая категория";
+    }
 
     @using (Html.BeginForm("Save", "Category"))
     {

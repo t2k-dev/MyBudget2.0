@@ -1,0 +1,97 @@
+﻿#sandbox-container:hover {
+    color: #0079a1;
+}
+
+#sandbox-container {
+    font-size: 2rem;
+    border: 0px;
+    font-weight: 300;
+    cursor: pointer;
+    background-color: transparent;
+    min-width: 100px;
+}
+
+.datepicker td, .datepicker th {
+    font-size: 1rem;
+    width: 30px;
+    height: 30px;
+}
+
+@media (max-width: 767px) {
+    .datepicker {
+        left: 50% !important;
+        margin-left: -130px !important;
+    }
+}
+
+.datepicker table {
+    border-collapse: initial;
+    border-spacing: 5px;
+}
+
+    .datepicker table tr td.active.active, .datepicker table tr td span.active.active {
+        background-color: #395971 !important;
+        background-image: none;
+    }
+
+.datepicker {
+    border: 1px solid #ddd !important;
+}
+
+.progress {
+    height: 8px;
+    background: #e3e3e3;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+}
+
+    .progress .progress-bar {
+        position: relative;
+        -webkit-animation: animate-positive 2s;
+        animation: animate-positive 2s;
+    }
+
+        .progress .progress-bar:after {
+            content: "";
+            width: 1px;
+            height: 50px;
+            position: absolute;
+            top: -39px;
+            right: 0;
+        }
+
+    .progress .progress-value {
+        display: block;
+        font-size: 14px;
+        font-weight: normal;
+        color: #4caac5;
+        position: absolute;
+        top: -30px;
+        right: -80px;
+    }
+
+.green .progress-bar,
+.green .progress-bar:after {
+    background: #008000;
+}
+
+@-webkit-keyframes animate-positive {
+    0% {
+        width: 10%;
+    }
+}
+
+@keyframes animate-positive {
+    0% {
+        width: 10%;
+    }
+}
+
+.dt-inp-modal {
+    max-width: 96px;
+    border: 1px solid #ddd;
+    font-weight: 300;
+    cursor: pointer;
+    background-color: transparent;
+}
