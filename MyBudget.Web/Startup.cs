@@ -53,7 +53,8 @@ namespace MyBudget.Web
             services.AddScoped<ITemplateService, TemplateService>();
             services.AddScoped<IGraphService, GraphService>();
             services.AddScoped<IAutoOperationsService, AutoOperationsService>();
-
+            services.AddScoped<IExcelExportService, ExcelExportService>();
+            
             services.AddControllersWithViews();
         }
 

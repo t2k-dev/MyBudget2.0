@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 using System.Security.Claims;
+using ClosedXML.Excel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +23,7 @@ namespace MyBudget.Web.Controllers
         private readonly IAccountService _accountService;
         private readonly IGoalService _goalService;
         private readonly IAutoOperationsService _autoOperationsService;
+        private readonly IExcelExportService _excelExportService;
 
         public TransactionController(
             IHttpContextAccessor httpContextAccessor,
@@ -28,7 +31,8 @@ namespace MyBudget.Web.Controllers
             ITransactionService transactionService,
             IAccountService accountService,
             IGoalService goalService,
-            IAutoOperationsService autoOperationsService
+            IAutoOperationsService autoOperationsService,
+            IExcelExportService excelExportService
             )
         {
             _httpContextAccessor = httpContextAccessor;
@@ -37,13 +41,14 @@ namespace MyBudget.Web.Controllers
             _accountService = accountService;
             _goalService = goalService;
             _autoOperationsService = autoOperationsService;
+            _excelExportService = excelExportService;
         }
         #endregion
 
         public IActionResult MainPage(string id)
         {
             var userID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            
+
             var listDate = string.IsNullOrWhiteSpace(id)
                 ? DateTime.Now
                 : DateTime.ParseExact(id, "MMyyyy", CultureInfo.InvariantCulture, DateTimeStyles.None);
@@ -65,7 +70,7 @@ namespace MyBudget.Web.Controllers
             var userID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var categories = _categoryService.GetOrderedUserCategories(userID, isSpending);
             var currency = _accountService.GetUserDefaultCurrency(userID);
-            
+
             var transaction = new TransactionModel()
             {
                 IsSpending = isSpending,
@@ -88,11 +93,11 @@ namespace MyBudget.Web.Controllers
         {
             var userID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var transaction = _transactionService.GetTransaction(id);
-            
+
             /*if (transaction == null)
             {
                 //return HttpNotFound();
-            } */           
+            } */
 
             var categories = _categoryService.GetOrderedUserCategories(userID, transaction.IsSpending);
 
@@ -143,6 +148,19 @@ namespace MyBudget.Web.Controllers
             _transactionService.DeleteTransaction(id);
 
             return RedirectToAction("MainPage");
+        }
+
+        public IActionResult ExportToExcel(DateTime? excelSince, DateTime? excelTill)
+        {
+            var userID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var stream = _excelExportService.GetTransactionsListFile(userID, excelSince, excelTill);
+
+            if (stream == null)
+            {
+                return NotFound();
+            }
+
+            return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "MyBudget.xlsx");
         }
     }
 }
