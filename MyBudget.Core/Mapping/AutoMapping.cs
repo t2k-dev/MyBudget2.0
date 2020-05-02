@@ -11,11 +11,14 @@ namespace MyBudget.Core.Mapping
             CreateMap<Category, CategoryModel>();
             CreateMap<CategoryModel, Category>();
 
-            CreateMap<Goal, GoalModel>();
-            CreateMap<GoalModel, Goal>();
-
             CreateMap<Currency, CurrencyModel>();
             CreateMap<CurrencyModel, Currency>();
+
+            CreateMap<User, UserModel>();
+            CreateMap<UserModel, User>();
+
+            CreateMap<Goal, GoalModel>();
+            CreateMap<GoalModel, Goal>();
 
             CreateMap<Transaction, TransactionModel>();
             CreateMap<TransactionModel, Transaction>();

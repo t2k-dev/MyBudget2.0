@@ -6,6 +6,7 @@ using MyBudget.Core.Extensions;
 using MyBudget.Domain;
 using MyBudget.Core.Models.Account;
 using AutoMapper;
+using System;
 
 namespace MyBudget.Core.Services
 {
@@ -71,9 +72,10 @@ namespace MyBudget.Core.Services
             var userConfigs = new UserConfigs
             {
                 CarryoverRests = user.CarryoverRests,
-                DefaultCurrencyID = user.DefaultCurrencyID
+                DefaultCurrencyID = user.DefaultCurrencyID,
+                UpdateDate = user.UpdateDate
             };
-
+            
             return userConfigs;
         }
 
@@ -85,6 +87,15 @@ namespace MyBudget.Core.Services
             userInDbo.DefaultCurrencyID = userConfigs.DefaultCurrencyID;
             userInDbo.CarryoverRests = userConfigs.CarryoverRests;
             
+            _context.SaveChanges();
+        }
+
+        public void RefreshUpdateDate(string userID)
+        {
+            var userInDbo = _context.Users.Single(u => u.Id == userID);
+
+            userInDbo.UpdateDate = DateTime.Now;
+
             _context.SaveChanges();
         }
     }

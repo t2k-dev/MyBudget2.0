@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using MyBudget.Core.Enums;
 using MyBudget.Core.Extensions;
 using MyBudget.Core.Interfaces;
 using MyBudget.Core.Models;
@@ -63,7 +64,7 @@ namespace MyBudget.Core.Services
         {
             userID.CheckForNull(nameof(userID));
             
-            int noCategoryID = isSpending ? Category.SpendingNoCategory : Category.IncomeNoCategory;
+            int noCategoryID = isSpending ? (int)SystemCategories.SpendingNoCategory : (int)SystemCategories.IncomeNoCategory;
 
             var categories = _context.Categories
                 .Where(c => c.IsSpendingCategory == isSpending
@@ -160,7 +161,7 @@ namespace MyBudget.Core.Services
                 try
                 {
                     // Update Transactions
-                    int defaultCategoryID = category.IsSpendingCategory ? Category.SpendingNoCategory : Category.IncomeNoCategory;
+                    int defaultCategoryID = category.IsSpendingCategory ? (int)SystemCategories.SpendingNoCategory : (int)SystemCategories.IncomeNoCategory;
                     var transactions = _context.Transactions.Where(transaction => transaction.CategoryID == category.ID).ToList();
                     transactions.ForEach(t => t.CategoryID = defaultCategoryID);
 

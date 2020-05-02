@@ -20,13 +20,15 @@ namespace MyBudget.Web.Controllers
         private readonly ITransactionService _transactionService;
         private readonly IAccountService _accountService;
         private readonly IGoalService _goalService;
+        private readonly IAutoOperationsService _autoOperationsService;
 
         public TransactionController(
             IHttpContextAccessor httpContextAccessor,
             ICategoryService categoryService,
             ITransactionService transactionService,
             IAccountService accountService,
-            IGoalService goalService
+            IGoalService goalService,
+            IAutoOperationsService autoOperationsService
             )
         {
             _httpContextAccessor = httpContextAccessor;
@@ -34,6 +36,7 @@ namespace MyBudget.Web.Controllers
             _transactionService = transactionService;
             _accountService = accountService;
             _goalService = goalService;
+            _autoOperationsService = autoOperationsService;
         }
         #endregion
 
@@ -44,6 +47,8 @@ namespace MyBudget.Web.Controllers
             var listDate = string.IsNullOrWhiteSpace(id)
                 ? DateTime.Now
                 : DateTime.ParseExact(id, "MMyyyy", CultureInfo.InvariantCulture, DateTimeStyles.None);
+
+            _autoOperationsService.ExecuteMonthlyOperations(userID);
 
             var viewModel = new MainPageViewModel()
             {

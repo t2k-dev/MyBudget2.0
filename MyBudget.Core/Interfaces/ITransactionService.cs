@@ -16,5 +16,9 @@ namespace MyBudget.Core.Interfaces
         public void DeleteTransaction(string transactionID);
 
         public void ChangePlannedStatus(string transactionID);
+
+        public void AddRestTransaction(string userID);
+
+        public void AddTemplateTransactions(string userID);
     }
 }

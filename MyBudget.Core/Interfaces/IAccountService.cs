@@ -37,5 +37,11 @@ namespace MyBudget.Core.Interfaces
         /// <param name="userConfigs">Configs model</param>
         /// <param name="userID">User ID (Guid as string)</param>
         public void SaveConfig(UserConfigs userConfigs, string userID);
+
+        /// <summary>
+        /// Set UpdateDate for user with current date and time.
+        /// </summary>
+        /// <param name="userID">User ID (Guid as string)</param>
+        public void RefreshUpdateDate(string userID);
     }
 }

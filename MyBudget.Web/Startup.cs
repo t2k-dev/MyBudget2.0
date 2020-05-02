@@ -52,6 +52,7 @@ namespace MyBudget.Web
             services.AddScoped<IGoalService, GoalService>();
             services.AddScoped<ITemplateService, TemplateService>();
             services.AddScoped<IGraphService, GraphService>();
+            services.AddScoped<IAutoOperationsService, AutoOperationsService>();
 
             services.AddControllersWithViews();
         }
