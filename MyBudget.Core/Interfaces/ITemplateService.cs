@@ -1,5 +1,6 @@
 ﻿using MyBudget.Core.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MyBudget.Core.Interfaces
 {
@@ -11,8 +12,10 @@ namespace MyBudget.Core.Interfaces
 
         public void AddTemplate(TemplateModel templateModel);
 
-        public void UpdateTransaction(TemplateModel templateModel);
+        public Task<int> AddTemplateAsync(TemplateModel templateModel);
 
-        public void DeleteTemplate(int templateID);
+        public void UpdateTemplate(TemplateModel templateModel);
+
+        public void DeleteTemplate(int id);
     }
 }

@@ -9,6 +9,7 @@ using MyBudget.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyBudget.Core.Services
 {
@@ -25,10 +26,6 @@ namespace MyBudget.Core.Services
         }
         #endregion
 
-        /// <summary>
-        /// Add default categories to a new user after registration.
-        /// </summary>
-        /// <param name="UserID">User ID (Guid as string)</param>
         public void AddDefaultCategories(string userID)
         {
             userID.CheckForNull(nameof(userID));
@@ -54,12 +51,6 @@ namespace MyBudget.Core.Services
             _context.SaveChanges();
         }
 
-        /// <summary>
-        /// Get ordered list of categories connected with user.
-        /// </summary>
-        /// <param name="userID">User ID (Guid as string)</param>
-        /// <param name="isSpending">Category spending type</param>
-        /// <returns></returns>
         public List<CategoryModel> GetOrderedUserCategories(string userID, bool isSpending)
         {
             userID.CheckForNull(nameof(userID));
@@ -80,11 +71,6 @@ namespace MyBudget.Core.Services
             return _mapper.Map<List<Category>, List<CategoryModel>>(categories);
         }
 
-        /// <summary>
-        /// Returns all users categories.
-        /// </summary>
-        /// <param name="userID">User ID</param>
-        /// <returns></returns>
         public List<CategoryModel> GetAllUserCategories(string userID)
         {
             userID.CheckForNull(nameof(userID));
@@ -97,11 +83,6 @@ namespace MyBudget.Core.Services
             return _mapper.Map<List<Category>, List<CategoryModel>>(categories);
         }
 
-        /// <summary>
-        /// Get Category by ID.
-        /// </summary>
-        /// <param name="categoryID">Category ID</param>
-        /// <returns></returns>
         public CategoryModel GetCategory(int categoryID)
         {
             categoryID.CheckMoreThenZero(nameof(categoryID));
@@ -114,10 +95,6 @@ namespace MyBudget.Core.Services
             return _mapper.Map<Category, CategoryModel>(category);
         }
 
-        /// <summary>
-        /// Add Category to users list.
-        /// </summary>
-        /// <param name="categoryModel"></param>
         public void AddNewCategory(CategoryModel categoryModel)
         {
             categoryModel.CheckForNull(nameof(categoryModel));
@@ -129,12 +106,31 @@ namespace MyBudget.Core.Services
             _context.SaveChanges();
         }
 
-        /// <summary>
-        /// Delete category from user list.
-        /// </summary>
-        /// <param name="userID">User ID (Guid as string)</param>
-        /// <param name="categoryID">Category ID</param>
-        public void DeleteUserCategory(string userID, int categoryID)
+        public async Task<int> AddNewCategoryAsync(CategoryModel categoryModel)
+        {
+            categoryModel.CheckForNull(nameof(categoryModel));
+
+            var category = _mapper.Map<CategoryModel, Category>(categoryModel);
+            _context.Categories.Add(category);
+            category.UserCategories.Add(new UserCategory { CategoryID = category.ID, UserId = category.CreatedByID });
+
+            await _context.SaveChangesAsync();
+            return category.ID;
+        }
+
+        public void UpdateCategory(CategoryModel categoryModel)
+        {
+            categoryModel.CheckForNull(nameof(categoryModel));
+            var category = _context.Categories.SingleOrDefault(c => c.ID == categoryModel.ID);
+            category.CheckForNull(nameof(category), category.ID.ToString());
+
+            category.Name = categoryModel.Name;
+            category.Icon = categoryModel.Icon;
+
+            _context.SaveChanges();
+        }
+
+        public void DeleteCategory(string userID, int categoryID)
         {
             userID.CheckForNull(nameof(userID));
             categoryID.CheckMoreThenZero(nameof(categoryID));
@@ -142,7 +138,7 @@ namespace MyBudget.Core.Services
             var category = _context.Categories.SingleOrDefault(category => category.ID == categoryID);
             if (category == null)
             {
-                throw new Exception("No Such Category.");
+                throw new Exception($"No such Category with ID = {categoryID}.");
             }
 
             if (category.IsSystem)

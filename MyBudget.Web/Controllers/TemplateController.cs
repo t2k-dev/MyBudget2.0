@@ -131,7 +131,7 @@ namespace MyBudget.Web.Controllers
             }
             else
             {
-                _templateService.UpdateTransaction(template);
+                _templateService.UpdateTemplate(template);
             }
 
             return RedirectToAction("TemplateList", "Template");

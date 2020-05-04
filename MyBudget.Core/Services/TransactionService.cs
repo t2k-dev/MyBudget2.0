@@ -9,6 +9,7 @@ using MyBudget.Core.Models;
 using AutoMapper;
 using MyBudget.Core.Extensions;
 using MyBudget.Core.Enums;
+using System.Threading.Tasks;
 
 namespace MyBudget.Core.Services
 {
@@ -46,6 +47,7 @@ namespace MyBudget.Core.Services
                     && transaction.TransactionDate.Year == year
                     && transaction.TransactionDate.Month == month
                     )
+                .OrderBy(transaction => transaction.TransactionDate)
                 .Include(transaction => transaction.Category)
                 .ToList();
 
@@ -62,37 +64,52 @@ namespace MyBudget.Core.Services
             _context.SaveChanges();
         }
 
-        public void UpdateTransaction(TransactionModel transactionModel)
+        public async Task<Guid> AddTransactionAsync(TransactionModel transactionModel)
         {
             transactionModel.CheckForNull(nameof(transactionModel));
 
             var transaction = _mapper.Map<TransactionModel, Transaction>(transactionModel);
 
-            var transactionInDb = _context.Transactions.Single(t => t.ID == transaction.ID);
-            transactionInDb.Name = transaction.Name;
-            transactionInDb.Amount = transaction.Amount;
-            transactionInDb.CategoryID = transaction.CategoryID;
-            transactionInDb.Description = transaction.Description;
-            transactionInDb.IsSpending = transaction.IsSpending;
-            transactionInDb.TransactionDate = transaction.TransactionDate;
-            transactionInDb.IsPlaned = transaction.IsPlaned;
-            transactionInDb.UserID = transaction.UserID;
-            transactionInDb.CurrencyID = transaction.CurrencyID;
+            _context.Transactions.Add(transaction);
+            await _context.SaveChangesAsync();
+            
+            return transaction.ID;
+        }
+
+        public void UpdateTransaction(TransactionModel transactionModel)
+        {
+            transactionModel.CheckForNull(nameof(transactionModel));
+
+            var transaction = _context.Transactions.SingleOrDefault(t => t.ID == transactionModel.ID);
+            transaction.CheckForNull(nameof(transaction), transactionModel.ID.ToString());
+
+            transaction.Name = transactionModel.Name;
+            transaction.Amount = transactionModel.Amount;
+            transaction.CategoryID = transactionModel.CategoryID;
+            transaction.Description = transactionModel.Description;
+            transaction.IsSpending = transactionModel.IsSpending;
+            transaction.TransactionDate = transactionModel.TransactionDate;
+            transaction.IsPlaned = transactionModel.IsPlaned;
+            transaction.UserID = transactionModel.UserID;
+            transaction.CurrencyID = transactionModel.CurrencyID;
 
             _context.SaveChanges();
         }
 
-        public void DeleteTransaction(string transactionID)
+        public void DeleteTransaction(string id)
         {
-            var transaction = _context.Transactions.SingleOrDefault(t => t.ID == Guid.Parse(transactionID));
+            var transaction = _context.Transactions.SingleOrDefault(t => t.ID == Guid.Parse(id));
+            transaction.CheckForNull(nameof(transaction), id);
+
             _context.Transactions.Remove(transaction);
             _context.SaveChanges();
         }
 
         public void ChangePlannedStatus(string transactionID)
         {
-            var transactionInDb = _context.Transactions.SingleOrDefault(t => t.ID == Guid.Parse(transactionID));
-            transactionInDb.IsPlaned = !transactionInDb.IsPlaned;
+            var transaction = _context.Transactions.SingleOrDefault(t => t.ID == Guid.Parse(transactionID));
+            transaction.CheckForNull(nameof(transaction), transactionID);
+            transaction.IsPlaned = !transaction.IsPlaned;
             
             _context.SaveChanges();
         }

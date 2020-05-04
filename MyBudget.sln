@@ -9,11 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBudget.Domain", "MyBudget
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBudget.Data", "MyBudget.Data\MyBudget.Data.csproj", "{66B41830-0942-4015-8FCD-27CAAA2D3050}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBudget.Core", "MyBudget.Core\MyBudget.Core.csproj", "{D0614B00-E629-4880-96A6-8680BAEE18B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBudget.Core", "MyBudget.Core\MyBudget.Core.csproj", "{D0614B00-E629-4880-96A6-8680BAEE18B0}"
 	ProjectSection(ProjectDependencies) = postProject
 		{66B41830-0942-4015-8FCD-27CAAA2D3050} = {66B41830-0942-4015-8FCD-27CAAA2D3050}
 		{EA53959A-F273-453A-A8B2-1CD656B9E263} = {EA53959A-F273-453A-A8B2-1CD656B9E263}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBudget.API", "MyBudget.API\MyBudget.API.csproj", "{AA14CEB0-E464-47DE-AECF-DBFFC5A3F51C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{D0614B00-E629-4880-96A6-8680BAEE18B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0614B00-E629-4880-96A6-8680BAEE18B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0614B00-E629-4880-96A6-8680BAEE18B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA14CEB0-E464-47DE-AECF-DBFFC5A3F51C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA14CEB0-E464-47DE-AECF-DBFFC5A3F51C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA14CEB0-E464-47DE-AECF-DBFFC5A3F51C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA14CEB0-E464-47DE-AECF-DBFFC5A3F51C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

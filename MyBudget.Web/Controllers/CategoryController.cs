@@ -103,7 +103,7 @@ namespace MyBudget.Web.Controllers
         {
             var userID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            _categoryService.DeleteUserCategory(userID, id);
+            _categoryService.DeleteCategory(userID, id);
 
             return RedirectToAction("Index");
         }

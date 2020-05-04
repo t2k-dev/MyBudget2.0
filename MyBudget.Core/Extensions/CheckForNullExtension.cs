@@ -12,6 +12,15 @@ namespace MyBudget.Core.Extensions
             }
         }
 
+        public static void CheckForNull<T>(this T targetObject, string parameterName, string id) where T : class
+        {
+            if (targetObject == null)
+            {
+                throw new ArgumentNullException(parameterName, $"There is no \"{parameterName}\" with ID = {id}");
+            }
+        }
+
+
         public static void CheckForNull<T>(this T? targetObject, string parameterName) where T : struct
         {
             if (targetObject == null)

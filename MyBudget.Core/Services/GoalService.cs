@@ -9,6 +9,7 @@ using MyBudget.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyBudget.Core.Services
 {
@@ -79,6 +80,32 @@ namespace MyBudget.Core.Services
             _context.SaveChanges();
         }
 
+        public async Task<int> AddGoalAsync(GoalModel goalModel)
+        {
+            goalModel.CheckForNull(nameof(goalModel));
+
+            var goal = _mapper.Map<GoalModel, Goal>(goalModel);
+
+            switch (goal.Type)
+            {
+                case (byte)GoalTypes.Debt:
+                    {
+                        CreateDebtTransaction(goal);
+                        break;
+                    }
+                case (byte)GoalTypes.Loan:
+                    {
+                        CreateLoanTransaction(goal);
+                        break;
+                    }
+            }
+
+            _context.Goals.Add(goal);
+            await _context.SaveChangesAsync();
+
+            return goal.ID;
+        }
+
         public void UpdateGoal(GoalModel goalModel)
         {
             goalModel.CheckForNull(nameof(goalModel));
@@ -92,6 +119,15 @@ namespace MyBudget.Core.Services
             goalInDb.CompleteDate = goal.CompleteDate;
             goalInDb.IsActive = goal.IsActive;
 
+            _context.SaveChanges();
+        }
+
+        public void DeleteGoal(int id)
+        {
+            var goal = _context.Goals.SingleOrDefault(g => g.ID == id);
+            goal.CheckForNull(nameof(goal), id.ToString());
+
+            _context.Goals.Remove(goal);
             _context.SaveChanges();
         }
 

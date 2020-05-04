@@ -1,5 +1,6 @@
 ﻿using MyBudget.Core.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MyBudget.Core.Interfaces
 {
@@ -40,10 +41,23 @@ namespace MyBudget.Core.Interfaces
         public void AddNewCategory(CategoryModel categoryModel);
 
         /// <summary>
+        /// Add Category to users list async.
+        /// </summary>
+        /// <param name="categoryModel"></param>
+        /// <returns>Created category ID</returns>
+        public Task<int> AddNewCategoryAsync(CategoryModel categoryModel);
+
+        /// <summary>
+        /// Updates Category
+        /// </summary>
+        /// <param name="categoryModel"></param>
+        public void UpdateCategory(CategoryModel categoryModel);
+
+        /// <summary>
         /// Delete category from user list.
         /// </summary>
         /// <param name="userID">User ID (Guid as string)</param>
         /// <param name="categoryID">Category ID</param>
-        public void DeleteUserCategory(string userID, int categoryID);
+        public void DeleteCategory(string userID, int categoryID);
     }
 }

@@ -5,10 +5,9 @@ using MyBudget.Core.Interfaces;
 using MyBudget.Core.Models;
 using MyBudget.Data;
 using MyBudget.Domain;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace MyBudget.Core.Services
 {
@@ -58,7 +57,18 @@ namespace MyBudget.Core.Services
 
         }
 
-        public void UpdateTransaction(TemplateModel templateModel)
+        public async Task<int> AddTemplateAsync(TemplateModel templateModel)
+        {
+            templateModel.CheckForNull(nameof(templateModel));
+
+            var template = _mapper.Map<TemplateModel, Template>(templateModel);
+
+            _context.Templates.Add(template);
+            await _context.SaveChangesAsync();
+
+            return template.ID;
+        }
+        public void UpdateTemplate(TemplateModel templateModel)
         {
             templateModel.CheckForNull(nameof(templateModel));
 
@@ -77,9 +87,9 @@ namespace MyBudget.Core.Services
             _context.SaveChanges();
         }
 
-        public void DeleteTemplate(int templateID)
+        public void DeleteTemplate(int id)
         {
-            var template = _context.Templates.SingleOrDefault(t => t.ID == templateID);
+            var template = _context.Templates.SingleOrDefault(t => t.ID == id);
             _context.Templates.Remove(template);
             _context.SaveChanges();
 
