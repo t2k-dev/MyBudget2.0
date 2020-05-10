@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyBudget.Core.Models.Account;
+using System;
 
 namespace MyBudget.Core.Models
 {

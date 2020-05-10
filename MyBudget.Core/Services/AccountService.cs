@@ -7,6 +7,8 @@ using MyBudget.Domain;
 using MyBudget.Core.Models.Account;
 using AutoMapper;
 using System;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace MyBudget.Core.Services
 {
@@ -14,13 +16,25 @@ namespace MyBudget.Core.Services
     {
         #region ctors & fields
 
-        private ApplicationContext _context;
+        private readonly ApplicationContext _context;
         private readonly IMapper _mapper;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly ICategoryService _categoryService; 
 
-        public AccountService(ApplicationContext context, IMapper mapper)
+        public AccountService(
+            ApplicationContext context,
+            IMapper mapper,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            ICategoryService categoryService
+            )
         {
             _context = context;
             _mapper = mapper;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _categoryService = categoryService;
         }
 
         #endregion
@@ -49,6 +63,15 @@ namespace MyBudget.Core.Services
                 .FirstOrDefault();
 
             return symbol;
+        }
+
+        public string GetUserIDByName(string userName)
+        {
+            // TODO check
+            return _context.Users
+                .Where(u => u.UserName == userName)
+                .Select(u => u.Id)
+                .SingleOrDefault();
         }
 
         public CurrencyModel GetUserDefaultCurrency(string userID)
@@ -97,6 +120,69 @@ namespace MyBudget.Core.Services
             userInDbo.UpdateDate = DateTime.Now;
 
             _context.SaveChanges();
+        }
+
+        public async Task<string> RegisterAsync(UserModel userModel, string password)
+        {
+            var user = new User
+            {
+                UserName = userModel.UserName,
+                Email = userModel.Email,
+                DefaultCurrencyID = userModel.DefaultCurrencyID
+            };
+            var result = await _userManager.CreateAsync(user, password);
+            if (result.Succeeded)
+            {
+                _categoryService.AddDefaultCategories(user.Id);
+            }
+            else
+            {
+                string _errors = string.Empty;
+                foreach (var error in result.Errors)
+                {
+                    _errors = $"{_errors}{error};";
+                }
+
+                throw new Exception(_errors);
+            }
+
+            return user.Id;
+        }
+
+        public async void ChangePasswordAsync(string userID, string oldPassword, string newPassword)
+        {
+            var user = _context.Users.SingleOrDefault(u => u.Id == userID);
+            user.CheckForNull(nameof(user), userID);
+
+            var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+        }
+    
+        public void ForgotPassword(string userName, string email)
+        {
+            throw new Exception("Not implemented");
+
+            var user = new User();
+            if (!string.IsNullOrEmpty(email))
+            {
+                //user = _userManager.FindByEmailAsync(email);
+            }
+            else if (!string.IsNullOrEmpty(userName))
+            {
+                //user = _userManager.FindByNameAsync(userName);
+            }
+
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            //string code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            
+            string newPassord = StringUtils.GeneratePassword();
+
+            //var resetResul = await _userManager.ResetPasswordAsync(user, code, newPassord);
+
+            //await AppUserManager.SendEmailAsync(user.Id, "Сброс пароля для MuBudget", $"Ваш временный пароль: {newPassord}");
         }
     }
 }

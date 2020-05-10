@@ -69,14 +69,13 @@ namespace MyBudget.Web.Controllers
                 return View("CategoryForm", viewmodel);
             }
 
-
             if (category.ID == 0)
             {
                 _categoryService.AddNewCategory(category);
             }
             else
             {
-                /*Для редактирования*/
+                _categoryService.UpdateCategory(category);
             }
             return RedirectToAction("Index", "Category");
         }

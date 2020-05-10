@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +17,7 @@ using MyBudget.Core.Interfaces;
 using MyBudget.Core.Mapping;
 using MyBudget.Core.Services;
 using MyBudget.Data;
+using MyBudget.Domain;
 
 namespace MyBudget.API
 {
@@ -34,6 +36,15 @@ namespace MyBudget.API
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 1;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            })
+                .AddEntityFrameworkStores<ApplicationContext>();
+
+
             services.AddAutoMapper(typeof(AutoMapping));
 
             services.AddScoped<IAccountService, AccountService>();
@@ -42,6 +53,7 @@ namespace MyBudget.API
             services.AddScoped<IGoalService, GoalService>();
             services.AddScoped<ITemplateService, TemplateService>();
             services.AddScoped<IGraphService, GraphService>();
+            services.AddScoped<IAutoOperationsService, AutoOperationsService>();
 
             services.AddControllers();
         }

@@ -93,8 +93,21 @@
                         <div class="crd-itm @opacityClass">
                             <div class="crd-content">
                                 <button data-goal-id="@goal.ID" type="button" class="btn btn-link fas fa-trash-alt del-btn-crd js-del-goal" data-toggle="modal" data-target="#DelTemplateModal"></button>
-
-                                <a class="crd-caption" href="@Url.Action("Edit", "Goal", new { id = goal.ID})">@goal.GoalName </a>
+                                
+                                <a class="crd-caption" href="@Url.Action("Edit", "Goal", new { id = goal.ID})">
+                                    @if (goal.CompleteDate != null)
+                                    {
+                                        if (goal.CompleteDate < DateTime.Now)
+                                        {
+                                            <span title="Срок истек" class="fas fa-fire" style="color:#ffa500"></span>
+                                        }
+                                        else if (goal.CompleteDate < DateTime.Now.AddDays(7))
+                                        {
+                                            <span title="До истечентя срока осталось меньше 7 дней" class="fas fa-exclamation-circle"></span>
+                                        }
+                                    }
+                                    @goal.GoalName
+                                </a>
                                 @if (goal.IsActive == true)
                                 {
                                     <button type="button" class="btn btn-link js-pay-goal pay-goal" data-toggle="modal" data-target="#myModal" data-goal-id="@goal.ID" data-goal-Amount="@goal.TotalAmount" data-goal-CurrentAmount="@goal.CurrentAmount" data-catType="SYS_5"></button>
@@ -134,7 +147,21 @@
                             <div class="crd-content">
                                 <button data-goal-id="@debt.ID" type="button" class="btn btn-link fas fa-trash-alt del-btn-crd js-del-goal" data-toggle="modal" data-target="#DelTemplateModal"></button>
 
-                                <a class="crd-caption" href="@Url.Action("Edit", "Goal", new { id = debt.ID})">@debt.GoalName </a>
+                                <a class="crd-caption" href="@Url.Action("Edit", "Goal", new { id = debt.ID})">
+                                    @if (debt.CompleteDate != null)
+                                    {
+                                        if (debt.CompleteDate < DateTime.Now)
+                                        {
+                                            <span title="Срок истек" class="fas fa-fire" style="color:#ffa500"></span>
+                                        }
+                                        else if (debt.CompleteDate < DateTime.Now.AddDays(7))
+                                        {
+                                            <span title="До истечентя срока осталось меньше 7 дней" class="fas fa-exclamation-circle"></span>
+                                        }
+                                    }
+
+                                    @debt.GoalName
+                                </a>
                                 @if (debt.IsActive == true)
                                 {
                                     <button type="button" class="btn btn-link js-pay-goal pay-goal" data-toggle="modal" data-target="#myModal" data-goal-id="@debt.ID" data-goal-Amount="@debt.TotalAmount" data-goal-CurrentAmount="@debt.CurrentAmount" data-catType="SYS_3"></button>
@@ -175,7 +202,20 @@
                         <div class="crd-itm @opacityClass">
                             <div class="crd-content">
                                 <button data-goal-id="@loan.ID" type="button" class="btn btn-link fas fa-trash-alt del-btn-crd js-del-goal" data-toggle="modal" data-target="#DelTemplateModal"></button>
-                                <a class="crd-caption" href="@Url.Action("Edit", "Goal", new { id = loan.ID})">@loan.GoalName </a>
+                                <a class="crd-caption" href="@Url.Action("Edit", "Goal", new { id = loan.ID})">
+                                    @if (loan.CompleteDate != null)
+                                    {
+                                        if (loan.CompleteDate < DateTime.Now)
+                                        {
+                                            <span title="Срок истек" class="fas fa-fire" style="color:#ffa500"></span>
+                                        }
+                                        else if (loan.CompleteDate < DateTime.Now.AddDays(7))
+                                        {
+                                            <span title="До истечентя срока осталось меньше 7 дней" class="fas fa-exclamation-circle"></span>
+                                        }
+                                    }
+                                    @loan.GoalName
+                                </a>
                                 @if (loan.IsActive == true)
                                 {
                                     <button type="button" class="btn btn-link js-pay-goal pay-goal" data-toggle="modal" data-target="#myModal" data-goal-id="@loan.ID" data-goal-Amount="@loan.TotalAmount" data-goal-CurrentAmount="@loan.CurrentAmount" data-catType="SYS_1"></button>

@@ -1,4 +1,6 @@
-﻿namespace MyBudget.Core.Models
+﻿using MyBudget.Core.Models.Account;
+
+namespace MyBudget.Core.Models
 {
     public class TemplateModel
     {

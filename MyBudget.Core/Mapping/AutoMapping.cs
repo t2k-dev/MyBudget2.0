@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MyBudget.Core.Models;
+using MyBudget.Core.Models.Account;
 using MyBudget.Domain;
 
 namespace MyBudget.Core.Mapping

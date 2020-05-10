@@ -1,5 +1,6 @@
 ﻿using MyBudget.Core.Models;
 using MyBudget.Core.Models.Account;
+using System.Threading.Tasks;
 
 namespace MyBudget.Core.Interfaces
 {
@@ -16,6 +17,13 @@ namespace MyBudget.Core.Interfaces
         /// <param name="userID">User ID (Guid as string)</param>
         /// <returns>Symbol like '₸', '$', etc. </returns>
         public string GetUserDefaultCurrencySymbol(string userID);
+
+        /// <summary>
+        /// Get user ID by user name.
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns>User ID (Guid as string)</returns>
+        public string GetUserIDByName(string userName);
 
         /// <summary>
         /// Gets the users default currency.
@@ -43,5 +51,28 @@ namespace MyBudget.Core.Interfaces
         /// </summary>
         /// <param name="userID">User ID (Guid as string)</param>
         public void RefreshUpdateDate(string userID);
+
+        /// <summary>
+        /// Register new user.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public Task<string> RegisterAsync(UserModel user, string password);
+
+        /// <summary>
+        /// Change password for user.
+        /// </summary>
+        /// <param name="userID">User ID (Guid as string)</param>
+        /// <param name="oldPassword"></param>
+        /// <param name="newPassword"></param>
+        public void ChangePasswordAsync(string userID, string oldPassword, string newPassword);
+
+        /// <summary>
+        /// Resets password and sends an email.
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="email"></param>
+        public void ForgotPassword(string userName, string email);
     }
 }

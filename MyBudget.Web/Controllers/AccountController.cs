@@ -52,7 +52,7 @@ namespace MyBudget.Web.Controllers
             {
                 return View(model);
             }
-            
+
             var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
             {
