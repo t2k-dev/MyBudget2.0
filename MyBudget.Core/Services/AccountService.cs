@@ -20,14 +20,16 @@ namespace MyBudget.Core.Services
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly ICategoryService _categoryService; 
+        private readonly ICategoryService _categoryService;
+        private readonly IEmailSenderService _emailSenderService; 
 
         public AccountService(
             ApplicationContext context,
             IMapper mapper,
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            ICategoryService categoryService
+            ICategoryService categoryService,
+            IEmailSenderService emailSenderService
             )
         {
             _context = context;
@@ -35,6 +37,7 @@ namespace MyBudget.Core.Services
             _userManager = userManager;
             _signInManager = signInManager;
             _categoryService = categoryService;
+            _emailSenderService = emailSenderService;
         }
 
         #endregion
@@ -134,6 +137,7 @@ namespace MyBudget.Core.Services
             if (result.Succeeded)
             {
                 _categoryService.AddDefaultCategories(user.Id);
+                _emailSenderService.SendRegistrationEmail(user.Email);
             }
             else
             {
