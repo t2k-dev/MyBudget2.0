@@ -73,6 +73,6 @@ namespace MyBudget.Core.Interfaces
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="email"></param>
-        public void ForgotPassword(string userName, string email);
+        public Task ForgotPassword(string userName, string email);
     }
 }

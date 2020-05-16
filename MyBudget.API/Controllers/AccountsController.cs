@@ -191,12 +191,12 @@ namespace MyBudget.API.Controllers
         [HttpPost]
         [CheckModelForNull]
         [Route("forgotPassword")]
-        public IActionResult ForgotPassword(ForgotPasswordRequestDTO model)
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordRequestDTO model)
         {
             try
             {
-                _accountService.ForgotPassword(model.Username, model.Email);
-                
+                await _accountService.ForgotPassword(model.Username, model.Email);
+
                 return Ok();
             }
             catch (Exception ex)

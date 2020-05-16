@@ -161,18 +161,16 @@ namespace MyBudget.Core.Services
             var result = await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
         }
     
-        public void ForgotPassword(string userName, string email)
+        public async Task ForgotPassword(string userName, string email)
         {
-            throw new Exception("Not implemented");
-
             var user = new User();
             if (!string.IsNullOrEmpty(email))
             {
-                //user = _userManager.FindByEmailAsync(email);
+                user = await _userManager.FindByEmailAsync(email);
             }
             else if (!string.IsNullOrEmpty(userName))
             {
-                //user = _userManager.FindByNameAsync(userName);
+                user = await _userManager.FindByNameAsync(userName);
             }
 
             if (user == null)
@@ -180,13 +178,13 @@ namespace MyBudget.Core.Services
                 throw new Exception("User not found");
             }
 
-            //string code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            
+            string code = await _userManager.GeneratePasswordResetTokenAsync(user);
             string newPassord = StringUtils.GeneratePassword();
-
-            //var resetResul = await _userManager.ResetPasswordAsync(user, code, newPassord);
-
-            //await AppUserManager.SendEmailAsync(user.Id, "Сброс пароля для MuBudget", $"Ваш временный пароль: {newPassord}");
+            var resetResult = await _userManager.ResetPasswordAsync(user, code, newPassord);
+            if (resetResult.Succeeded)
+            {
+                _emailSenderService.SendResetPasswordEmail(user.Email, newPassord);
+            }
         }
     }
 }

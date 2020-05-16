@@ -99,6 +99,12 @@ namespace MyBudget.Web.Controllers
             return RedirectToAction("MainPage", "Transaction");
         }
 
+        public IActionResult Delete(int id)
+        {
+            _goalService.DeleteGoal(id);
+            return RedirectToAction("MainPage", "Transaction");
+        }
+        
         [HttpPost]
         public IActionResult PutMoney(double Amount, int putOnId)
         {

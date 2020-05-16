@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyBudget.Core.Configs;
 using MyBudget.Core.Interfaces;
 using MyBudget.Core.Mapping;
 using MyBudget.Core.Services;
@@ -54,7 +55,14 @@ namespace MyBudget.Web
             services.AddScoped<IGraphService, GraphService>();
             services.AddScoped<IAutoOperationsService, AutoOperationsService>();
             services.AddScoped<IExcelExportService, ExcelExportService>();
-            
+            services.AddScoped<IEmailSenderService, EmailSenderService>();
+
+            var emailConfig = Configuration
+                .GetSection("EmailConfiguration")
+                .Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
+
+
             services.AddControllersWithViews();
         }
 

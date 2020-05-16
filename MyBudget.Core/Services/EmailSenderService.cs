@@ -40,6 +40,27 @@ namespace MyBudget.Core.Services
             }
         }
 
+        public void SendResetPasswordEmail(string userEmail, string password)
+        {
+            if (!_emailConfig.IsEnabled)
+            {
+                return;
+            }
+
+            var message = new MailMessage()
+            {
+                From = new MailAddress(_emailConfig.From, "MyBudgetSender"),
+                Subject = "MyBudget password is reset.",
+                Body = $"Dear customer, Your new password:{password}",
+                IsBodyHtml = true
+            };
+            message.To.Add(new MailAddress(userEmail));
+
+            Send(message);
+        }
+
+        #region Helpers
+
         private void Send(MailMessage mailMessage)
         {
             using (var client = new SmtpClient(_emailConfig.SmtpServer))
@@ -57,9 +78,12 @@ namespace MyBudget.Core.Services
                 }
                 finally
                 {
+                    mailMessage.Dispose();
                     client.Dispose();
                 }
             }
         }
+
+        #endregion
     }
 }

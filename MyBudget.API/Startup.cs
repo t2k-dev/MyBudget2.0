@@ -43,8 +43,8 @@ namespace MyBudget.API
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
             })
-                .AddEntityFrameworkStores<ApplicationContext>();
-
+            .AddEntityFrameworkStores<ApplicationContext>()
+            .AddDefaultTokenProviders(); 
 
             services.AddAutoMapper(typeof(AutoMapping));
 
