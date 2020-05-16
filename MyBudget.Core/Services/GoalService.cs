@@ -111,6 +111,8 @@ namespace MyBudget.Core.Services
             goalModel.CheckForNull(nameof(goalModel));
 
             var goal = _mapper.Map<GoalModel, Goal>(goalModel);
+            
+            goal.IsActive = goal.CurrentAmount < goal.TotalAmount ? true : false;
 
             var goalInDb = _context.Goals.Single(g => g.ID == goal.ID);
             goalInDb.GoalName = goal.GoalName;

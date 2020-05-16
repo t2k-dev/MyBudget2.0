@@ -27,6 +27,10 @@ namespace MyBudget.Data
             builder.Entity<UserCategory>()
                 .HasKey(u => new { u.UserId, u.CategoryID });
 
+            builder.Entity<Goal>()
+                .Property(e => e.IsActive)
+                .HasDefaultValue(true);
+
             #region Seeding database.
 
             builder.Entity<Category>().HasData(

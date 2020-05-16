@@ -73,7 +73,6 @@ namespace MyBudget.API.Controllers
                     TotalAmount = model.Amount,
                     Type = model.Type,
                     UserID = model.UserId,
-                    IsActive = true,
                     CurrentAmount = model.CurAmount ?? 0,
                     CompleteDate = model.CompleteDate ?? null,
                     CurrencyID = 1 // TODO
@@ -106,7 +105,6 @@ namespace MyBudget.API.Controllers
                 goal.TotalAmount = model.Amount ?? goal.TotalAmount;
                 goal.CurrentAmount = model.CurAmount.Value;
                 goal.CompleteDate = model.CompleteDate;
-                goal.IsActive = model.CurAmount == model.Amount ? false : true;
 
                 _goalService.UpdateGoal(goal);
                 

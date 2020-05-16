@@ -34,13 +34,13 @@
             <div class="form-group">
                 <label for="GoalName">Полная сумма</label>
                 @Html.TextBoxFor(m => m.Goal.TotalAmount, new { @class = "form-control-lg amt-inp jq-money", autocomplete = "off", maxlength = "13", type = "tel" })
-                <span class="cur-inp">@Model.Goal.Currency.Symbol</span>
+                <span class="cur-inp">@Model.DefaultCurrencySymbol</span>
                 @Html.ValidationMessageFor(m => m.Goal.TotalAmount, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 <label for="GoalName">Текущая сумма</label>
                 @Html.TextBoxFor(m => m.Goal.CurrentAmount, new { @class = "form-control-lg amt-inp jq-money", autocomplete = "off", maxlength = "13", type = "tel" })
-                <span class="cur-inp">@Model.Goal.Currency.Symbol</span>
+                <span class="cur-inp">@Model.DefaultCurrencySymbol</span>
                 @Html.ValidationMessageFor(m => m.Goal.CurrentAmount, "", new { @class = "text-danger" })
 
             </div>

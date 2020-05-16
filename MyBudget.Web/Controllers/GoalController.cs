@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.EMMA;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyBudget.Core.Enums;
@@ -45,14 +46,14 @@ namespace MyBudget.Web.Controllers
             {
                 Type = type,
                 UserID = userID,
-                IsActive = true,
                 CurrencyID = defaultCurrency.ID,
                 Currency = defaultCurrency
             };
 
             var viewModel = new GoalFormViewModel
             {
-                Goal = goal
+                Goal = goal,
+                DefaultCurrencySymbol = _accountService.GetUserDefaultCurrencySymbol(userID)
             };
 
             return View("GoalForm", viewModel);
@@ -64,7 +65,8 @@ namespace MyBudget.Web.Controllers
             
             var viewModel = new GoalFormViewModel
             {
-                Goal = goal
+                Goal = goal,
+                DefaultCurrencySymbol = goal.Currency.Symbol
             };
 
             return View("GoalForm", viewModel);
@@ -74,18 +76,16 @@ namespace MyBudget.Web.Controllers
         public IActionResult Save(GoalModel goal)
         {
             var userID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
             if (!ModelState.IsValid)
             {
                 var viewModel = new GoalFormViewModel
                 {
                     Goal = goal,
+                    DefaultCurrencySymbol = _accountService.GetUserDefaultCurrencySymbol(userID)
                 };
 
                 return View("GoalForm", viewModel);
             }
-
-            goal.IsActive = goal.CurrentAmount == goal.TotalAmount ? false : true;
 
             if (goal.ID == 0)
             {

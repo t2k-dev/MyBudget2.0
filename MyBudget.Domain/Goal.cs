@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyBudget.Domain
 {
@@ -6,6 +7,8 @@ namespace MyBudget.Domain
     {
         public int ID { get; set; }
 
+        [Required]
+        [StringLength(70)]
         public string GoalName { get; set; }
 
         public byte Type { get; set; }
@@ -14,10 +17,10 @@ namespace MyBudget.Domain
 
         public double TotalAmount { get; set; }
 
-        public bool IsActive { get; set; }        
+        public bool IsActive { get; set; }
 
         public User User { get; set; }
-        
+
         public string UserID { get; set; }
 
         public DateTime? CompleteDate { get; set; }
