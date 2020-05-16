@@ -7,5 +7,6 @@ namespace MyBudget.Web.Models.Transaction
     {
         public IEnumerable<CategoryModel> Categories { get; set; }
         public TransactionModel Transaction { get; set; }
+        public string DefaultCurrencySymbol { get; set; }
     }
 }

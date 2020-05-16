@@ -76,14 +76,14 @@ namespace MyBudget.Web.Controllers
                 IsSpending = isSpending,
                 TransactionDate = DateTime.Now,
                 UserID = userID,
-                Currency = currency, // TODO: refactor after adding multicurrency.
                 CurrencyID = currency.ID
             };
 
             var viewModel = new TransactionFormViewModel
             {
                 Transaction = transaction,
-                Categories = categories
+                Categories = categories,
+                DefaultCurrencySymbol = _accountService.GetUserDefaultCurrencySymbol(userID)
             };
 
             return View("TransactionForm", viewModel);
@@ -105,6 +105,7 @@ namespace MyBudget.Web.Controllers
             {
                 Transaction = transaction,
                 Categories = categories,
+                DefaultCurrencySymbol = _accountService.GetUserDefaultCurrencySymbol(userID)
             };
 
             return View("TransactionForm", viewModel);
@@ -122,7 +123,8 @@ namespace MyBudget.Web.Controllers
                 var viewModel = new TransactionFormViewModel()
                 {
                     Transaction = transaction,
-                    Categories = categories
+                    Categories = categories,
+                    DefaultCurrencySymbol = _accountService.GetUserDefaultCurrencySymbol(userID)
                 };
 
                 return View("TransactionForm", viewModel);

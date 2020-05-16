@@ -46,7 +46,7 @@
                                     }
                                     <tr data-tr-id="@template.ID">
                                         <td class="td-day">@template.Day</td>
-                                        <td class="td-name" onclick="window.location.href = '/Template//Edit/' + @template.ID;">
+                                        <td class="td-name" onclick="window.location.href = '/Template/Edit/' + @template.ID;">
                                             @{
                                                 if (String.IsNullOrEmpty(template.Name))
                                                 {
@@ -56,7 +56,7 @@
                                             @template.Name
                                             <div class="cat-name">  @template.Category.Name</div>
                                         </td>
-                                        <td onclick="window.location.href = '/Template//Edit/' + @template.ID;" class="text-right amt @amtClass">@amtChar @template.Amount.ToString("### ### ### ###") @template.Currency.Symbol</td>
+                                        <td onclick="window.location.href = '/Template/Edit/' + @template.ID;" class="text-right amt @amtClass">@amtChar @template.Amount.ToString("### ### ### ###") @template.Currency.Symbol</td>
                                         <td>
                                             <button type="button" class="btn btn-link fas fa-trash-alt glyph-btn js-del-tmp" data-toggle="modal" data-target="#DelRecordModal"></button>
                                         </td>

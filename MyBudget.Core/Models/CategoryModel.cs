@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyBudget.Core.Models
 {
@@ -6,6 +7,8 @@ namespace MyBudget.Core.Models
     {
         public int ID { get; set; }
 
+        [Required(ErrorMessage = "Заполните поле")]
+        [MaxLength(40,ErrorMessage = "Не длиннее 40 символов")]
         public string Name { get; set; }
 
         public bool IsSpendingCategory { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyBudget.Domain
 {
@@ -6,6 +7,7 @@ namespace MyBudget.Domain
     {
         public Guid ID { get; set; }
 
+        [StringLength(90)]
         public string Name { get; set; }
 
         public double Amount { get; set; }

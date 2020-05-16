@@ -58,12 +58,6 @@ namespace MyBudget.Web.Controllers
             var userID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var currency = _accountService.GetUserDefaultCurrency(userID);
             var categories = _categoryService.GetOrderedUserCategories(userID, isSpending);
-            
-            List<int> days = new List<int>();
-            for (int i = 1; i <= 28; i++)
-            {
-                days.Add(i);
-            }
 
             var template = new TemplateModel()
             {
@@ -73,12 +67,12 @@ namespace MyBudget.Web.Controllers
                 CurrencyID = currency.ID
             };
 
-
             var viewModel = new TemplateFormViewModel
             {
                 Template = template,
                 Categories = categories,
-                Days = new SelectList(days)
+                Days = new SelectList(GetDaysArray()),
+                DefaultCurrencySymbol = _accountService.GetUserDefaultCurrencySymbol(userID)
             };
 
             return View("TemplateForm", viewModel);
@@ -91,18 +85,12 @@ namespace MyBudget.Web.Controllers
             var template = _templateService.GetTemplate(id);
             var categories = _categoryService.GetOrderedUserCategories(userID, template.IsSpending);
 
-            // Список дней
-            List<int> days = new List<int>();
-            for (int i = 1; i <= 28; i++)
-            {
-                days.Add(i);
-            }
-
             var viewModel = new TemplateFormViewModel
             {
                 Template = template,
                 Categories = categories,
-                Days = new SelectList(days)
+                Days = new SelectList(GetDaysArray()),
+                DefaultCurrencySymbol = _accountService.GetUserDefaultCurrencySymbol(userID)
             };
 
             return View("TemplateForm", viewModel);
@@ -119,7 +107,9 @@ namespace MyBudget.Web.Controllers
                 var viewModel = new TemplateFormViewModel()
                 {
                     Template = template,
-                    Categories = categories
+                    Categories = categories,
+                    Days = new SelectList(GetDaysArray()),
+                    DefaultCurrencySymbol = _accountService.GetUserDefaultCurrencySymbol(userID)
                 };
 
                 return View("TemplateForm", viewModel);
@@ -146,5 +136,17 @@ namespace MyBudget.Web.Controllers
             return RedirectToAction("TemplateList", "Template");
 
         }
+
+        #region Helpers
+        private List<int> GetDaysArray()
+        {
+            List<int> days = new List<int>();
+            for (int i = 1; i <= 28; i++)
+            {
+                days.Add(i);
+            }
+            return days;
+        }
+        #endregion
     }
 }

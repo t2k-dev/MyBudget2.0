@@ -184,11 +184,8 @@ function loadTable() {
                         spendingClass = 'text-success'
                     }
 
-                    if (item.Name == null) {
-                        item.Name = "---";
-                    }
-                    if (item.CategoryName == null) {
-                        item.CategoryName = "";
+                    if (item.name == null) {
+                        item.name = "---";
                     }
 
                     var op_class = "";

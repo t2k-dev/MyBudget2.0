@@ -28,7 +28,7 @@
             <label for="Transaction_Amount">Сумма <span class="txt-orange">*</span></label>
             <div>
                 @Html.TextBoxFor(m => m.Template.Amount, new { @class = "form-control-lg amt-inp jq-money", autocomplete = "off", maxlength = "13", type = "tel", autofocus = "true" })
-                <span class="cur-inp">@Model.Template.Currency.Symbol</span>
+                <span class="cur-inp">@Model.DefaultCurrencySymbol</span>
                 @Html.ValidationMessageFor(m => m.Template.Amount, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -51,7 +51,7 @@
             <div>
                 <label for="Template_Day">Число месяца <span class="txt-orange">*</span></label>
                 @Html.DropDownListFor(t => t.Template.Day, Model.Days, new { @class = "form-control short-dropdown" })
-                @Html.ValidationMessageFor(m => m.Template.Amount, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(m => m.Template.Day, "", new { @class = "text-danger" })
             </div>
         </div>
         <hr />
@@ -72,51 +72,51 @@
 {
     <script type="text/javascript">
         $(document).ready(function () {
+            $('.jq-money').each(function () {
+                var $amt = $(this);
 
-            /*Для поля Сумма*/
-            var $amt = $('.jq-money');
+                if ($amt.val() == '0') {
+                    $amt.val('');
+                }
 
-            if ($amt.val() == '0') {
-                $amt.val('');
-            }
+                if ($amt.val() !== '') {
+                    var num = parseInt($amt.val(), 10);
+                    $amt.val(num.toLocaleString("ru-RU"));
+                }
 
-            if ($amt.val() !== '') {
-                var num = parseInt($amt.val(), 10);
-                $amt.val(num.toLocaleString("ru-RU"));
-            }
+                $amt.on("keyup", function (event) {
+                    var selection = window.getSelection().toString();
+                    if (selection !== '') { return; }
 
-            $amt.on("keyup", function (event) {
-                var selection = window.getSelection().toString();
-                if (selection !== '') { return; }
+                    if ($.inArray(event.keyCode, [38, 40, 37, 39]) !== -1) { return; }
 
-                if ($.inArray(event.keyCode, [38, 40, 37, 39]) !== -1) { return; }
+                    var $this = $(this);
+                    var input = $this.val();
 
-                var $this = $(this);
-                var input = $this.val();
-
-                input = input.replace(/[\D\s\._\-]+/g, "");
-                input = input ? parseInt(input, 10) : 0;
-                $this.val(function () {
-                    return (input === 0) ? "" : input.toLocaleString("ru-RU");
+                    input = input.replace(/[\D\s\._\-]+/g, "");
+                    input = input ? parseInt(input, 10) : 0;
+                    $this.val(function () {
+                        return (input === 0) ? "" : input.toLocaleString("ru-RU");
+                    });
                 });
+
             });
 
             $('form').submit(function () {
-                var textValue = $amt.val();
-                $amt.val(textValue.replace(/[\D\s\._\-]+/g, ""));
+                $('.jq-money').each(function () {
+
+                    var textValue = $(this).val();
+
+                    $(this).val(textValue.replace(/[\D\s\._\-]+/g, ""));
+                    if (textValue == '')
+                        $(this).val('0');
+                });
+
+                if ($("#sandbox-container").val() == 'дд.мм.гггг')
+                    $("#sandbox-container").val('');
             });
-            /*---*/
-        });
 
-
-        $('#sandbox-container').datepicker({
-            format: "dd.mm.yyyy",
-            minViewMode: 0,
-            todayBtn: "linked",
-            language: "ru",
-            autoclose: true,
-            defaultViewDate: { year: 2020, month: 01, day: 01 }
-        });
+        })
     </script>
 
 }

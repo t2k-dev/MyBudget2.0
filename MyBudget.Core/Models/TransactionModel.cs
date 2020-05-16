@@ -1,5 +1,6 @@
 ﻿using MyBudget.Core.Models.Account;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyBudget.Core.Models
 {
@@ -7,8 +8,10 @@ namespace MyBudget.Core.Models
     {
         public Guid ID { get; set; }
 
+        [MaxLength(90, ErrorMessage = "Не длиннее 90 символов")]
         public string Name { get; set; }
 
+        [Range(1, 999999999, ErrorMessage = "Укажите корректную сумму")]
         public double Amount { get; set; }
 
         public DateTime TransactionDate { get; set; }

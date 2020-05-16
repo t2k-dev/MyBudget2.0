@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace MyBudget.Domain
@@ -8,6 +9,8 @@ namespace MyBudget.Domain
     {
         public int ID { get; set; }
 
+        [Required]
+        [MaxLength(40)]
         public string Name { get; set; }
          
         public bool IsSpendingCategory { get; set; }
@@ -19,11 +22,6 @@ namespace MyBudget.Domain
         public string CreatedByID { get; set; }
 
         public bool IsSystem { get; set; }
-
-        public Category()
-        {
-            //Users = new List<User>();
-        }
 
         #region System Categories
 

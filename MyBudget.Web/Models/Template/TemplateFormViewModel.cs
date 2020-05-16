@@ -14,5 +14,7 @@ namespace MyBudget.Web.Models.Template
         public IEnumerable<CategoryModel> Categories { get; set; }
 
         public SelectList Days { get; set; }
+
+        public string DefaultCurrencySymbol { get; set; }
     }
 }
