@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyBudget.Core.Interfaces;
@@ -9,6 +10,7 @@ using MyBudget.Web.Models.Category;
 
 namespace MyBudget.Web.Controllers
 {
+    [Authorize]
     public class CategoryController : Controller
     {
         #region ctro & fields

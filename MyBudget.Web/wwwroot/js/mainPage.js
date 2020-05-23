@@ -52,14 +52,14 @@
         var span = $(this).find("span");
         if ($("#tbl-w").hasClass("tbl-max") == true) {
             $('#tbl-w').removeClass("tbl-max", 1000);
-            span.removeClass("glyphicon-chevron-up");
-            span.addClass("glyphicon-chevron-down");
+            span.removeClass("fa-chevron-up");
+            span.addClass("fa-chevron-down");
             $("html, body").animate({ scrollTop: 0 }, "slow");
         }
         else {
             $('#tbl-w').addClass("tbl-max", 1000);
-            span.removeClass("glyphicon-chevron-down");
-            span.addClass("glyphicon-chevron-up");
+            span.removeClass("fa-chevron-down");
+            span.addClass("fa-chevron-up");
         }
     });
 

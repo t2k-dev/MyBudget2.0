@@ -25,26 +25,16 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-10 offset-md-1">
-                        <div class="checkbox chb-remember">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
                         <input type="submit" value="Войти" class="btn btn-primary enter-btn" />
                     </div>
                 </div>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger login-error" })
-                <div class="conf-panel" style="margin-bottom: 3rem;text-align:center;">
-                    @Html.ActionLink("Зарегистрируйтесь", "Register", "Account", null, new { @class = "register-lnk" } ), если у Вас всё ещё нет учетной записи
+                
+                <div class="" style="margin-bottom: 3rem;text-align:center;">
+                    <p>@Html.ActionLink("Забыли пароль?", "ForgotPassword", "Account", null, new { @class = "register-lnk" })</p>
+                    <p>@Html.ActionLink("Зарегистрироваться", "Register", "Account", null, new { @class = "register-lnk" })</p>
                 </div>
-                @* Включите, когда будет включено подтверждение учетной записи для функции сброса пароля
-                    <p>
-                        @Html.ActionLink("Забыли пароль?", "ForgotPassword")
-                    </p>*@
             }
         </section>
     </div>
 </div>
-
-@section Scripts {
-   
-}

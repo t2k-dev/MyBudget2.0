@@ -13,26 +13,29 @@
         else if (Model.Goal.Type == 1)
         {
             <h3 class="form-title">Новая цель</h3>
+            ViewBag.Title = "Новая цель";
         }
         else if (Model.Goal.Type == 2)
         {
             <h3 class="form-title">Взять в долг</h3>
+            ViewBag.Title = "Взять в долг";
         }
         else if (Model.Goal.Type == 3)
         {
             <h3 class="form-title">Дать в долг</h3>
+            ViewBag.Title = "Дать в долг";
         }
 
 
         @using (Html.BeginForm("Save", "Goal"))
         {
             <div class="form-group">
-                <label for="GoalName">Название</label>
+                <label for="GoalName">Название <span class="txt-orange">*</span></label>
                 @Html.TextBoxFor(m => m.Goal.GoalName, new { @class = "form-control", autocomplete = "off", spellcheck = "false" })
                 @Html.ValidationMessageFor(m => m.Goal.GoalName, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                <label for="GoalName">Полная сумма</label>
+                <label for="GoalName">Полная сумма <span class="txt-orange">*</span></label>
                 @Html.TextBoxFor(m => m.Goal.TotalAmount, new { @class = "form-control-lg amt-inp jq-money", autocomplete = "off", maxlength = "13", type = "tel" })
                 <span class="cur-inp">@Model.DefaultCurrencySymbol</span>
                 @Html.ValidationMessageFor(m => m.Goal.TotalAmount, "", new { @class = "text-danger" })
@@ -69,7 +72,7 @@
                 <div id="goal-date-w" style="display:@displayVal">
                     <input type="text" name="Goal.CompleteDate" id="sandbox-container" value="@ValCD" class="form-control lil-dp" spellcheck="false" autocomplete="off" readonly>
                     <p class="hlp-text" style="margin-top: 0.5rem;">
-                        * за месяц до окончания этой даты на главном экране появится подсказка.
+                        * за неделю до окончания этой даты на главном экране появится подсказка.
                     </p>
                 </div>
             </div>

@@ -25,7 +25,7 @@
     
 
     $('#ExcelSince').datepicker({
-        format: "dd-mm-yyyy",
+        format: "dd.mm.yyyy",
         minViewMode: 0,
         todayBtn: "linked",
         language: "ru",
@@ -33,7 +33,7 @@
     });
 
     $('#ExcelTill').datepicker({
-        format: "dd-mm-yyyy",
+        format: "dd.mm.yyyy",
         minViewMode: 0,
         todayBtn: "linked",
         language: "ru",

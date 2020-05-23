@@ -91,7 +91,7 @@ namespace MyBudget.Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Account}/{action=Login}/{id?}");
+                    pattern: "{controller=Transaction}/{action=MainPage}/{id?}");
             });
         }
     }

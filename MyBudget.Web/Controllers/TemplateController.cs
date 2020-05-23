@@ -10,9 +10,11 @@ using MyBudget.Core.Interfaces;
 using MyBudget.Core.Models;
 using MyBudget.Core.Extensions;
 using MyBudget.Web.Models.Template;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyBudget.Web.Controllers
 {
+    [Authorize]
     public class TemplateController : Controller
     {
         #region ctor & fields

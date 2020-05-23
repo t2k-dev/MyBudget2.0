@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyBudget.Core.Interfaces;
@@ -10,6 +11,7 @@ using MyBudget.Web.Models.Graph;
 
 namespace MyBudget.Web.Controllers
 {
+    [Authorize]
     public class GraphController : Controller
     {
         #region ctor & fields

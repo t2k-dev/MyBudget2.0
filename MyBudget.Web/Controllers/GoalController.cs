@@ -1,36 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using DocumentFormat.OpenXml.EMMA;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MyBudget.Core.Enums;
 using MyBudget.Core.Interfaces;
 using MyBudget.Core.Models;
-using MyBudget.Domain;
 using MyBudget.Web.Models;
 
 namespace MyBudget.Web.Controllers
 {
+    [Authorize]
     public class GoalController : Controller
     {
         #region ctor & fields
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly ITransactionService _transactionService;
         private readonly IAccountService _accountService;
         private readonly IGoalService _goalService;
 
         public GoalController(
             IHttpContextAccessor httpContextAccessor,
-            ITransactionService transactionService,
             IAccountService accountService,
             IGoalService goalService
             )
         {
             _httpContextAccessor = httpContextAccessor;
-            _transactionService = transactionService;
             _accountService = accountService;
             _goalService = goalService;
         }

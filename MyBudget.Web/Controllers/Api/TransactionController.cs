@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using MyBudget.Core.Interfaces;
 using MyBudget.Web.Models.Api;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace MyBudget.Web.Controllers.Api
 {
     [Route("api/[controller]")]
@@ -67,12 +65,6 @@ namespace MyBudget.Web.Controllers.Api
             _transactionService.ChangePlannedStatus(id);
 
             return Ok();
-        }
-
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

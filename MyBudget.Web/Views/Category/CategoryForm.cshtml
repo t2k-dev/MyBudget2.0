@@ -15,7 +15,7 @@
     @using (Html.BeginForm("Save", "Category"))
     {
         <div class="form-group">
-            <label for="Name">Название</label>
+            <label for="Name">Название <span class="txt-orange">*</span></label>
             @Html.TextBoxFor(m => m.Category.Name, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.Category.Name, "", new { @class = "text-danger" })
         </div>

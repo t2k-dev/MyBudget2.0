@@ -49,9 +49,9 @@ namespace MyBudget.Web.Controllers.Api
         {
             try
             {
-                var sinceParam = DateTime.ParseExact(since, "dd-MM-yyyy", null);
-                var tillParam = DateTime.ParseExact(till, "dd-MM-yyyy", null);
-                var resultList = _graphService.GetSpendingGraphByCategory(userId, sinceParam, tillParam); ;
+                var sinceParam = DateTime.ParseExact(since, "dd.MM.yyyy", null);
+                var tillParam = DateTime.ParseExact(till, "dd.MM.yyyy", null);
+                var resultList = _graphService.GetSpendingGraphByCategory(userId, sinceParam, tillParam);
 
                 if (resultList.Count() < 1)
                 {

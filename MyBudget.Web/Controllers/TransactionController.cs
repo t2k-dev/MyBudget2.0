@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using System.IO;
 using System.Security.Claims;
-using ClosedXML.Excel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -93,12 +91,6 @@ namespace MyBudget.Web.Controllers
         {
             var userID = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var transaction = _transactionService.GetTransaction(id);
-
-            /*if (transaction == null)
-            {
-                //return HttpNotFound();
-            } */
-
             var categories = _categoryService.GetOrderedUserCategories(userID, transaction.IsSpending);
 
             var viewModel = new TransactionFormViewModel

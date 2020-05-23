@@ -9,8 +9,11 @@ a.navbar-brand {
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #6095bd;
 }
+    a:hover {
+        color: #ff950d;
+    }
 
 .btn-primary {
   color: #fff;
@@ -189,7 +192,6 @@ body {
     padding: 0.7rem 1rem;
 }
 .navbar {
-    font-size: 0.8203125rem;
     font-weight: 300;
 }
 .navbar-nav {
@@ -565,7 +567,7 @@ body {
 .crd-caption {
     display: block;
     max-width: 100%;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 300;
     margin: 0 0.8rem 0.5rem;
     color: #fff;
@@ -841,7 +843,7 @@ body {
     }
 
 .conf-list-box {
-    width: 4.5rem;
+    width: 5rem;
     display: inline-block;
     float: right;
 }

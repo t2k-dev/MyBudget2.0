@@ -198,6 +198,23 @@ namespace MyBudget.Web.Controllers
          
             return RedirectToAction("MainPage", "Transaction");
         }
+
+        #endregion
+
+        #region Forgot password
+
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ResetPassword(ForgotPasswordViewModel model)
+        {
+            return Redirect("Login");
+        }
+
         #endregion
     }
 }
